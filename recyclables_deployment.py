@@ -8,11 +8,12 @@ Original file is located at
 """
 
 # Import
+import streamlit as st
+pip install tensorflow==2.5
 import subprocess
 subprocess.call(['pip', 'install', 'tensorflow'])
 import tensorflow as tf
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
-import streamlit as st
 import numpy as np
 from PIL import Image
 
