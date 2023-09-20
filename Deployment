@@ -1,0 +1,2 @@
+import pickle
+filename = 'trained_model.sav'
