@@ -8,7 +8,6 @@ Original file is located at
 """
 
 # Import
-pip install tensorflow
 import subprocess
 subprocess.call(['pip', 'install', 'tensorflow'])
 import tensorflow as tf
