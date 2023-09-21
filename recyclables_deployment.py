@@ -14,40 +14,47 @@ Original file is located at
 # import numpy as np
 # from PIL import Image
 
-
-# Load Model
-filename = '/ruskstoic/Recyclables_Classification/raw/master/Downloads/best_model_checkpoint.h5'
-model = tf.keras.load_model(filename)
-
-# Preprocess and Predict
-
-def preprocess(uploaded_image):
-  img = Image.open(uploaded_image)
-  img = img.resize((224,224)) #resize to dimension
-  img = np.array(img) / 255.0 #normalize pixel values
-  img = np.expand_dims(img,axis=0)
-  return img
-
-def predict(uploaded_image):
-  img = preprocess(uploaded_image)
-  predictions = model.predict(img)
-  return predictions
-
 # Streamlit Interface
-
 st.title('Can We Predict Which Recyclable Category Your Trash is Under?')
 
 uploaded_image = st.file_uploader("Upload your image...", type=['jpeg','jpg','png'])
 
 if uploaded_image is not None:
-  st.image(uploaded_image, caption='Uploaded Image', use_column_width=True)
+    st.image(uploaded_image, caption='Uploaded Image', use_column_width=True)
 
-  if st.button('Predict'):
-    if uploaded_image:
-      predictions = predict(uploaded_image)
-      class_names = ['Glass','Metal','Paper','Plastic']
+    if st.button('Predict'):
+        if uploaded_image:
+            # Define the GitHub repository URL and model file path
+            github_repo_url = 'https://github.com/ruskstoic/Recyclables_Classification/raw/main'
+            model_filename = 'best_model_checkpoint.h5'
+            
+            # Download the model file from GitHub
+            model_url = f'{github_repo_url}/{model_filename}'
+            response = requests.get(model_url)
+            
+            # Check if the download was successful
+            if response.status_code == 200:
+                # Save the model file locally
+                with open(model_filename, 'wb') as f:
+                    f.write(response.content)
 
-      st.write('Prediction:')
-      st.write(f'Class: {class_names[np.argmax(predictions)]}')
-      st.write(f'Confidence: {np.max(predictions) * 100:.2f}%')
+                # Load the model
+                model = tf.keras.models.load_model(model_filename)
+
+                # Preprocess the uploaded image
+                img = Image.open(uploaded_image)
+                img = img.resize((224, 224))
+                img = np.array(img) / 255.0
+                img = np.expand_dims(img, axis=0)
+
+                # Make predictions
+                predictions = model.predict(img)
+                class_names = ['Glass', 'Metal', 'Paper', 'Plastic']
+
+                st.write('Prediction:')
+                st.write(f'Class: {class_names[np.argmax(predictions)]}')
+                st.write(f'Confidence: {np.max(predictions) * 100:.2f}%')
+            else:
+                st.write('Failed to download the model file from GitHub.')
+
 
