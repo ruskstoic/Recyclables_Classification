@@ -8,11 +8,11 @@ Original file is located at
 """
 
 # Import
-import streamlit as st
-import tensorflow as tf
-from tensorflow.keras.preprocessing.image import load_img, img_to_array
-import numpy as np
-from PIL import Image
+# import streamlit as st
+# import tensorflow as tf
+# from tensorflow.keras.preprocessing.image import load_img, img_to_array
+# import numpy as np
+# from PIL import Image
 
 # Streamlit Interface
 st.title('Can We Predict Which Recyclable Category Your Trash is Under?')
