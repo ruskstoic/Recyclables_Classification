@@ -66,7 +66,7 @@ if uploaded_image is not None:
 
                 # Make predictions
                 predictions = model.predict(img)
-                class_names = ['Metal', 'Glass', 'Paper', 'Plastic']
+                class_names = ['Glass', 'Metal', 'Paper', 'Plastic']
 
                 st.write('Prediction:')
                 st.write(f'Class: {class_names[np.argmax(predictions)]}')
