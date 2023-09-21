@@ -7,6 +7,9 @@ Original file is located at
     https://colab.research.google.com/drive/1aYBKTRhOD8gxXxqPUC9T1K-lDPaxloEV
 """
 
+import sys
+print(sys.version)
+
 # Import
 import streamlit as st
 # import tensorflow as tf
