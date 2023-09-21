@@ -57,9 +57,9 @@ if uploaded_image is not None:
                 model = tf.keras.models.load_model(model_filename)
 
                 # Preprocess the uploaded image
+                img = Image.open(uploaded_image)
                 if img.mode == 'RGBA':
                     img = img.convert('RGB')
-                img = Image.open(uploaded_image)
                 img = img.resize((224, 224))
                 img = np.array(img) / 255.0
                 img = np.expand_dims(img, axis=0)
