@@ -47,8 +47,8 @@ if uploaded_image is not None:
                     f.write(response.content)
 
                 # Load the model
-                import tensorflow as tf
-                from tensorflow.keras.preprocessing.image import load_img, img_to_array
+                # import tensorflow as tf
+                # from tensorflow.keras.preprocessing.image import load_img, img_to_array
                 model = tf.keras.models.load_model(model_filename)
 
                 # Preprocess the uploaded image
