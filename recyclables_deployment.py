@@ -8,15 +8,17 @@ Original file is located at
 """
 
 # Import
+if "tensorflow" not in st.sys_installed_packages():
+    st.warning("Installing TensorFlow...")
+    subprocess.call(['pip', 'install', 'tensorflow'])
+
 import streamlit as st
 import tensorflow as tf
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 import numpy as np
 from PIL import Image
 
-if "tensorflow" not in st.sys_installed_packages():
-    st.warning("Installing TensorFlow...")
-    subprocess.call(['pip', 'install', 'tensorflow'])
+
 
 # Load Model
 filename = 'best_model_checkpoint.h5'
