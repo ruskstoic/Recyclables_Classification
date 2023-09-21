@@ -31,7 +31,15 @@ if uploaded_image is not None:
             
             # Download the model file from GitHub
             model_url = f'{github_repo_url}/{model_filename}'
-            response = requests.get(model_url)
+            # response = requests.get(model_url)
+            try:
+                response = requests.get(model_url)
+                response.raise_for_status()  # Check for HTTP errors
+                with open('downloaded_model.h5', 'wb') as model_file:
+                    model_file.write(response.content)
+                st.success('Model file downloaded successfully!')
+            except requests.exceptions.RequestException as e:
+                st.error(f'Failed to download the model file: {str(e)}')
             
             # Check if the download was successful
             if response.status_code == 200:
