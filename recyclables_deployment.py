@@ -26,12 +26,14 @@ if uploaded_image is not None:
     if st.button('Predict'):
         if uploaded_image:
             # Define the GitHub repository URL and model file path
-            github_repo_url = 'https://github.com/ruskstoic/Recyclables_Classification/blob/master/Downloads'
+            github_repo_url = 'https://github.com/ruskstoic/Recyclables_Classification/raw/master/Downloads'
             model_filename = 'best_model_checkpoint.h5'
             
             # Download the model file from GitHub
             model_url = f'{github_repo_url}/{model_filename}'
             # response = requests.get(model_url)
+            model_url = 'https://github.com/ruskstoic/Recyclables_Classification/raw/master/Downloads/best_model_checkpoint.h5'
+
             try:
                 response = requests.get(model_url)
                 response.raise_for_status()  # Check for HTTP errors
