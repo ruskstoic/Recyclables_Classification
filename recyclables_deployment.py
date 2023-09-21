@@ -17,7 +17,7 @@ Original file is located at
 
 # Load Model
 filename = 'best_model_checkpoint.h5'
-model = tf.keras.load_model(f'/content/drive/MyDrive/Garbage Classification/Saved_Models/{filename}')
+model = tf.keras.load_model(f'/ruskstoic/Recyclables_Classification/raw/master/Downloads/best_model_checkpoint.h5{filename}')
 
 # Preprocess and Predict
 
