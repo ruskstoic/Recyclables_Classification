@@ -8,6 +8,7 @@ Original file is located at
 """
 
 # Import
+pip install tensorflow
 import streamlit as st
 import subprocess
 import pkgutil
