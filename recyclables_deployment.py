@@ -20,10 +20,8 @@ import requests
 
 # Streamlit Interface
 st.title('Can We Predict Which Recyclable Category Your Trash is Under?')
-st.subheader("Model Disclaimer: Work in Progress 🚧\
-\
-Our model is in its early stages and is continuously undergoing training and improvements. Please note that it's a beginner model, and while it shows promising results, it is not perfect. \
-We appreciate your understanding as we strive to enhance its performance over time.")
+st.subheader("Model Disclaimer: Work in Progress 🚧\n\nOur model is in its early stages and is continuously undergoing training and improvements. \
+Please note that it's a beginner model, and while it shows promising results, it is not perfect. We appreciate your understanding as we strive to enhance its performance over time.")
 
 uploaded_image = st.file_uploader("Upload your image...", type=['jpeg','jpg','png'])
 
