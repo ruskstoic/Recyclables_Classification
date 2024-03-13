@@ -24,7 +24,7 @@ from datetime import datetime, timedelta
 def get_or_create_user_ID():
     if 'user_id' not in st.session_state:
         # Generate a UUID for the tab ID
-        st.session_state.tab_id = str(uuid.uuid4())
+        st.session_state.user_id = str(uuid.uuid4())
     return st.session_state.user_id
 
 # def get_or_create_user_ID():
