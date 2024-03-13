@@ -5,3 +5,4 @@ Pillow
 requests
 uuid
 datetime
+subprocess
