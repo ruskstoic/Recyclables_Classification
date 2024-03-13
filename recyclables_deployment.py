@@ -20,6 +20,7 @@ import requests
 import uuid
 from datetime import datetime, timedelta
 import subprocess
+import pytz
 
 ## Functions
 # Function to get or create a unique ID for current session
@@ -81,22 +82,24 @@ if user_name:
     tab_id = get_or_create_tab_ID()
 
     #Create datetime and format it for log entry
-    datetime_entered = datetime.now()
-    formatted_datetime = datetime_entered.strftime('%Y-%m-%d %H-:%M:%S')
+    datetime_format = '%Y-%m-%d %H:%M:%S'
+    converted_timezone = pytz.timezone('Asia/Singapore')
+    converted_datetime_entered = datetime.now(converted_timezone)
+    formatted_datetime_entered = converted_datetime_entered.strftime(datetime_format)
 
     #Logging user information
     user_log_filename = 'user_log.txt'
-    log_user_info(user_name=user_name, user_id=user_id, datetime_entered=formatted_datetime, tab_id=tab_id)
+    log_user_info(user_name=user_name, user_id=user_id, datetime_entered=formatted_datetime_entered, tab_id=tab_id)
 
     #Commit and push changes for logging user information
-    subprocess.run(['git', 'add', 'user_log_filename'])
+    subprocess.run(['git', 'add', user_log_filename])
     subprocess.run(['git', 'commit', '-m', 'Added user information'])
     subprocess.run(['git', 'push', 'origin', 'main'])
 
     #Merge and display user info
-    user_info = f'Name: {user_name} | User ID: {user_id} | Date Entered: {formatted_datetime} | Tab ID: {tab_id}'
+    user_info = f'Name: {user_name} | User ID: {user_id} | Date Entered: {formatted_datetime_entered} | Tab ID: {tab_id}'
     st.subheader('User Information')
-    st.write(f'{user_info}')
+    st.write(user_info + '\n')
     
     uploaded_image = st.file_uploader("Upload your image...", type=['jpeg','jpg','png'])
     
