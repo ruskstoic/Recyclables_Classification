@@ -18,20 +18,52 @@ import numpy as np
 from PIL import Image
 import requests
 import uuid
+from datetime import datetime, timedelta
 
-#Function to get or create a unique ID for current session
+# Function to get or create a unique ID for current session
 def get_or_create_user_ID():
     if 'user_id' not in st.session_state:
-        # Generate a UUID for the user ID
-        st.session_state.user_id = str(uuid.uuid4())
+        # Generate a UUID for the tab ID
+        st.session_state.tab_id = str(uuid.uuid4())
     return st.session_state.user_id
 
-#Function to get a unique tab ID for current session
+# def get_or_create_user_ID():
+#     if 'user_id' not in st.session_state:
+#         # Generate a UUID for the user ID
+#         user_id = str(uuid.uuid4())
+#         # Set Expiration Time to be 100 Days
+#         expiration_time = datetime.now() + timedelta(days=100)
+#         # Store User ID and Expiration Time in session state
+#         st.session_state.user_id = user_id
+#         st.session_state.expiration_time = expiration_time
+#     else:
+#         # Check if user ID has expired
+#         if datetime.now() > st.session_state.expiration_time
+#         # Regenerate user ID
+#         user_id = str(uuid.uuid4())
+#         # Set Expiration Time
+#         expiration_time = datetime.now() + timedelta(days=100)
+#         # Store User ID and Expiration Time in session state
+#         st.session_state.user_id = user_id
+#         st.session_state.expiration_time = expiration_time
+#     return user_id
+
+# Function to get a unique tab ID for current session
 def get_or_create_tab_ID():
     if 'tab_id' not in st.session_state:
         # Generate a UUID for the tab ID
         st.session_state.tab_id = str(uuid.uuid4())
     return st.session_state.tab_id
+
+# Function to log user info
+def log_user_info(user_name, user_id, tab_id, datetime_entered):
+    # Format the datetime
+    formatted_datetime = datetime_entered.strftime('%Y-%m-%d %H-:%M:%S')
+    # Generate log entry
+    log_entry = f'{user_name} | {user_id} | {formatted_datetime} | {tab_id}'
+    # Append log entry to log file
+    with open('user_log.txt', 'a') as f:
+        f.write(log_entry)
 
 # Streamlit Interface
 st.title('Can We Predict Which Recyclable Category Your Trash is Under?')
@@ -47,6 +79,12 @@ if user_name:
 
     #Get or create a unique tab ID for current session
     tab_id = get_or_create_tab_ID()
+
+    #Create datetime for log entry
+    datetime_entered = datetime.now()
+
+    #Logging user information
+    log_user_info(user_name=user_name, user_id=user_id, tab_id=tab_id, datetime_entered=datetime_entered)
 
     #Merge and display user info
     user_info = f'Name: {user_name} | User ID: {user_id} | Tab ID: {tab_id}'
