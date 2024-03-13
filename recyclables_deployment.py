@@ -61,7 +61,7 @@ def get_or_create_tab_ID():
 # Function to log user info
 def log_user_info(user_name, user_id, datetime_entered, tab_id):
     # Generate log entry
-    log_entry = f'{user_name} | {user_id} | {formatted_datetime} | {tab_id}'
+    log_entry = f'{user_name} | {user_id} | {formatted_datetime_entered} | {tab_id}'
     # Append log entry to log file
     with open('user_log.txt', 'a') as file:
         file.write(log_entry)
