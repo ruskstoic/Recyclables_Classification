@@ -10,7 +10,7 @@ Original file is located at
 import sys
 print(sys.version)
 
-# Import
+## Import
 import streamlit as st
 # import tensorflow as tf
 # from tensorflow.keras.preprocessing.image import load_img, img_to_array
@@ -20,6 +20,7 @@ import requests
 import uuid
 from datetime import datetime, timedelta
 
+## Functions
 # Function to get or create a unique ID for current session
 def get_or_create_user_ID():
     if 'user_id' not in st.session_state:
@@ -56,16 +57,14 @@ def get_or_create_tab_ID():
     return st.session_state.tab_id
 
 # Function to log user info
-def log_user_info(user_name, user_id, tab_id, datetime_entered):
-    # Format the datetime
-    formatted_datetime = datetime_entered.strftime('%Y-%m-%d %H-:%M:%S')
+def log_user_info(user_name, user_id, datetime_entered, tab_id):
     # Generate log entry
     log_entry = f'{user_name} | {user_id} | {formatted_datetime} | {tab_id}'
     # Append log entry to log file
-    with open('user_log.txt', 'a') as f:
-        f.write(log_entry)
+    with open('user_log.txt', 'a') as file:
+        file.write(log_entry)
 
-# Streamlit Interface
+## Streamlit Interface
 st.title('Can We Predict Which Recyclable Category Your Trash is Under?')
 st.subheader("Model Disclaimer: Work in Progress 🚧\n\nOur model is in its early stages and is continuously undergoing training and improvements. \
 Please note that it's a beginner model, and while it shows promising results, it is not perfect. We appreciate your understanding as we strive to enhance its performance over time.")
@@ -80,14 +79,15 @@ if user_name:
     #Get or create a unique tab ID for current session
     tab_id = get_or_create_tab_ID()
 
-    #Create datetime for log entry
+    #Create datetime and format it for log entry
     datetime_entered = datetime.now()
+    formatted_datetime = datetime_entered.strftime('%Y-%m-%d %H-:%M:%S')
 
     #Logging user information
-    log_user_info(user_name=user_name, user_id=user_id, tab_id=tab_id, datetime_entered=datetime_entered)
+    log_user_info(user_name=user_name, user_id=user_id, datetime_entered=formatted_datetime, tab_id=tab_id)
 
     #Merge and display user info
-    user_info = f'Name: {user_name} | User ID: {user_id} | Tab ID: {tab_id}'
+    user_info = f'Name: {user_name} | User ID: {user_id} | Date Entered: {formatted_datetime} | Tab ID: {tab_id}'
     st.subheader('User Information')
     st.write(f'{user_info}')
     
