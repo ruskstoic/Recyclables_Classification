@@ -39,7 +39,7 @@ st.subheader("Model Disclaimer: Work in Progress 🚧\n\nOur model is in its ear
 Please note that it's a beginner model, and while it shows promising results, it is not perfect. We appreciate your understanding as we strive to enhance its performance over time.")
 
 #Prompt user to enter their name
-user_name = st.text_input('Enter Your Name:')
+user_name = st.text_input('Hi! What is your name?')
 
 if user_name:
     #Get or create a unique user ID for current session
@@ -50,7 +50,8 @@ if user_name:
 
     #Merge and display user info
     user_info = f'Name: {user_name} | User ID: {user_id} | Tab ID: {tab_id}'
-    st.write(f'User Information: {user_info}')
+    st.subheader('User Information'
+    st.write(f'{user_info}')
     
     uploaded_image = st.file_uploader("Upload your image...", type=['jpeg','jpg','png'])
     
