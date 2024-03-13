@@ -50,7 +50,7 @@ if user_name:
 
     #Merge and display user info
     user_info = f'Name: {user_name} | User ID: {user_id} | Tab ID: {tab_id}'
-    st.subheader('User Information'
+    st.subheader('User Information')
     st.write(f'{user_info}')
     
     uploaded_image = st.file_uploader("Upload your image...", type=['jpeg','jpg','png'])
