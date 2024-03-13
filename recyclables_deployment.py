@@ -19,6 +19,7 @@ from PIL import Image
 import requests
 import uuid
 from datetime import datetime, timedelta
+import subprocess
 
 ## Functions
 # Function to get or create a unique ID for current session
@@ -84,7 +85,13 @@ if user_name:
     formatted_datetime = datetime_entered.strftime('%Y-%m-%d %H-:%M:%S')
 
     #Logging user information
+    user_log_filename = 'user_log.txt'
     log_user_info(user_name=user_name, user_id=user_id, datetime_entered=formatted_datetime, tab_id=tab_id)
+
+    #Commit and push changes for logging user information
+    subprocess.run(['git', 'add', 'user_log_filename'])
+    subprocess.run(['git', 'commit', '-m', 'Added user information'])
+    subprocess.run(['git', 'push', 'origin', 'main'])
 
     #Merge and display user info
     user_info = f'Name: {user_name} | User ID: {user_id} | Date Entered: {formatted_datetime} | Tab ID: {tab_id}'
