@@ -3,7 +3,7 @@ name: Log User Input
 on:
   push:
     paths:
-      - 'user_log.txt'
+      - 'main/user_log.txt'
 
 jobs:
   build:
