@@ -24,3 +24,5 @@ jobs:
         git add user_log.txt
         git commit -m 'Log user input'
         git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
