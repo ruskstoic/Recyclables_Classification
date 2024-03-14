@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'main/user_log.txt'
+  workflow_dispatch:
 
 jobs:
   build:
