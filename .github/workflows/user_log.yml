@@ -14,12 +14,12 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Log User Info
-    run: |
-      echo '${{ github.event_name }}'
-      echo 'Logging user info...'
-      echo 'User input: ${{ secrets.USER_INPUT }}' >> user_log.txt
-      git config --local user.email "action@github.com"
-      git config --local user.name "GitHub Action"
-      git add user_log.txt
-      git commit -m 'Log user input'
-      git push
+      run: |
+        echo '${{ github.event_name }}'
+        echo 'Logging user info...'
+        echo 'User input: ${{ secrets.USER_INPUT }}' >> user_log.txt
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add user_log.txt
+        git commit -m 'Log user input'
+        git push
