@@ -23,7 +23,7 @@ jobs:
         echo '${{ github.event_name }}'
         echo 'Logging user info...'
         echo 'User input: ${{ secrets.USER_INPUT }}' >> user_log.txt
-        echo 'Github token: ${{ secrets.GITHUB_TOKEN }}'
+        echo 'Github token: ${{ secrets.WORKFLOW_ACTION_TOKEN }}'
         echo 'Working directory: $(pwd)'
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
@@ -31,4 +31,5 @@ jobs:
         git commit -m 'Log user input'
         git push
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.WORKFLOW_ACTION_TOKEN
+ }}
