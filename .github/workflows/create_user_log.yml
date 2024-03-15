@@ -7,7 +7,7 @@ permissions:
 on:
   push:
     paths:
-      - '.github/workflowsuser_log.txt'
+      - '.github/workflows/user_log.txt'
   workflow_dispatch:
 
 jobs:
