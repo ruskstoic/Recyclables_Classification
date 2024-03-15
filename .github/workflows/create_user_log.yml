@@ -3,7 +3,7 @@ name: Log User Input
 on:
   push:
     paths:
-      - 'main/user_log.txt'
+      - 'main/.github/workflowsuser_log.txt'
   workflow_dispatch:
 
 jobs:
