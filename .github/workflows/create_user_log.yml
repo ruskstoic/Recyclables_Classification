@@ -13,7 +13,6 @@ jobs:
       run:
         shell: bash
         working-directory: 'main/.github/workflows'
-        node-version: '20.x'
 
     steps:
     - name: Checkout repository
