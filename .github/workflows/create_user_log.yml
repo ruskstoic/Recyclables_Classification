@@ -31,5 +31,4 @@ jobs:
         git commit -m 'Log user input'
         git push
       env:
-        GITHUB_TOKEN: ${{ secrets.WORKFLOW_ACTION_TOKEN
- }}
+        GITHUB_TOKEN: ${{ secrets.WORKFLOW_ACTION_TOKEN }}
