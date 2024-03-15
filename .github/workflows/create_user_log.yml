@@ -12,11 +12,11 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: 'main/.github/workflows'
+        working-directory: '.github/workflows'
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Log User Info
       run: |
