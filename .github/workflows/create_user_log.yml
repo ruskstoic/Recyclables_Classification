@@ -4,7 +4,7 @@ name: Log User Input
 permissions:
   actions: write
   contents: write
-
+  pages: write 
 
 on:
   push:
