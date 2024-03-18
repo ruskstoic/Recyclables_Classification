@@ -24,20 +24,20 @@ jobs:
 
     steps:
       - run: echo 'test test'
-    # - name: Checkout repository
-    #   uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    # - name: Log User Info
-    #   run: |
-    #     echo '${{ github.event_name }}'
-    #     echo 'Logging user info...'
-    #     echo 'User input: ${{ secrets.USER_INPUT }}' >> user_log.txt
-    #     echo 'Github token: ${{ secrets.WORKFLOW_ACTION_TOKEN }}'
-    #     echo 'Working directory: $(pwd)'
-    #     git config --local user.email "action@github.com"
-    #     git config --local user.name "GitHub Action"
-    #     git add user_log.txt
-    #     git commit -m 'Log user input'
-    #     git push
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.WORKFLOW_ACTION_TOKEN }}
+      - name: Log User Info
+        run: |
+          echo '${{ github.event_name }}'
+          echo 'Logging user info...'
+          echo 'User input: ${{ secrets.USER_INPUT }}' >> user_log.txt
+          echo 'Github token: ${{ secrets.WORKFLOW_ACTION_TOKEN }}'
+          echo 'Working directory: $(pwd)'
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add user_log.txt
+          git commit -m 'Log user input'
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_ACTION_TOKEN }}
