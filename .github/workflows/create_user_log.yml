@@ -17,10 +17,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: '.github/workflows'
+    # defaults:
+    #   run:
+    #     shell: bash
+    #     working-directory: '.github/workflows'
 
     steps:
       - run: echo "test test'
