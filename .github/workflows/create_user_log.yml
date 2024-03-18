@@ -23,7 +23,7 @@ jobs:
     #     working-directory: '.github/workflows'
 
     steps:
-      - run: echo "test test'
+      - run: echo 'test test'
     # - name: Checkout repository
     #   uses: actions/checkout@v4
 
