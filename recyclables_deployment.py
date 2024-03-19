@@ -65,6 +65,7 @@ def log_user_info(user_name, user_id, datetime_entered, tab_id):
     # Append log entry to log file
     with open('user_log.txt', 'a') as file:
         file.write(log_entry)
+    return log_entry
 
 ## Streamlit Interface
 st.title('Can We Predict Which Recyclable Category Your Trash is Under?')
@@ -89,10 +90,10 @@ if user_name:
 
     #Logging user information
     user_log_filename = 'user_log.txt'
-    log_user_info(user_name=user_name, user_id=user_id, datetime_entered=formatted_datetime_entered, tab_id=tab_id)
+    log_entry = log_user_info(user_name=user_name, user_id=user_id, datetime_entered=formatted_datetime_entered, tab_id=tab_id)
 
     #Commit and push changes for logging user information
-    subprocess.run(['git', 'add', user_log_filename])
+    subprocess.run(['git', 'add', log_entry])
     subprocess.run(['git', 'commit', '-m', 'Added user information'])
     subprocess.run(['git', 'push', 'origin', 'main'])
 
