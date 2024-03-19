@@ -41,6 +41,8 @@ jobs:
         run: streamlit run app.py
 
       - name: Log User Info
+        env:
+          WORKFLOW_ACTION_TOKEN: ${{ secrets.WORKFLOW_ACTION_TOKEN }}
         run: |
           echo '${{ github.event_name }}'
           echo 'Logging user info...'
@@ -52,5 +54,4 @@ jobs:
           git add user_log.txt
           git commit -m 'Log user input'
           git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.WORKFLOW_ACTION_TOKEN }}
+        
