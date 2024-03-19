@@ -6,4 +6,3 @@ requests
 uuid
 datetime
 pytz
-os
