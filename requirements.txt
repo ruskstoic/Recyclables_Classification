@@ -1,3 +1,4 @@
+subprocess
 tensorflow
 streamlit
 numpy
