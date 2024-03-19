@@ -46,7 +46,6 @@ def log_user_info(user_name, user_id, datetime_entered, tab_id):
         file.write(log_entry)
     return log_entry
 
-user_name = st.text_input('Hi! What is your name?')
 
 ## Streamlit Interface
 st.title('Can We Predict Which Recyclable Category Your Trash is Under?')
