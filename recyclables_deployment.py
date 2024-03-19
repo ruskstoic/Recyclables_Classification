@@ -7,10 +7,10 @@ Original file is located at
     https://colab.research.google.com/drive/1aYBKTRhOD8gxXxqPUC9T1K-lDPaxloEV
 """
 
+## Import
 import sys
 print(sys.version)
-
-## Import
+import subprocess
 import streamlit as st
 # import tensorflow as tf
 # from tensorflow.keras.preprocessing.image import load_img, img_to_array
