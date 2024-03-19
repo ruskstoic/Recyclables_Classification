@@ -73,7 +73,7 @@ if user_name:
     log_entry = log_user_info(user_name=user_name, user_id=user_id, datetime_entered=formatted_datetime_entered, tab_id=tab_id)
 
     #Dispatch workflow
-    github_token = WORKFLOW_ACTION_TOKEN
+    github_token = secrets.WORKFLOW_ACTION_TOKEN
     subprocess.run([
         'curl',
         '-X', 'POST',
