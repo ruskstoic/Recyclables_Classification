@@ -27,11 +27,24 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set Up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Streamlit App
+        env:
+          WORKFLOW_ACTION_TOKEN: ${{ secrets.WORKFLOW_ACTION_TOKEN }}
+        run: streamlit run app.py
+
       - name: Log User Info
         run: |
           echo '${{ github.event_name }}'
           echo 'Logging user info...'
-          echo 'User input: ${{ secrets.USER_INPUT }}' >> user_log.txt
+          echo 'User input: ${{ secrets.USER_INFO }}' >> user_log.txt
           echo 'Github token: ${{ secrets.WORKFLOW_ACTION_TOKEN }}'
           echo 'Working directory: $(pwd)'
           git config --local user.email "action@github.com"
