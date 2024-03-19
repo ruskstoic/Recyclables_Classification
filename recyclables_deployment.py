@@ -30,27 +30,6 @@ def get_or_create_user_ID():
         st.session_state.user_id = str(uuid.uuid4())
     return st.session_state.user_id
 
-# def get_or_create_user_ID():
-#     if 'user_id' not in st.session_state:
-#         # Generate a UUID for the user ID
-#         user_id = str(uuid.uuid4())
-#         # Set Expiration Time to be 100 Days
-#         expiration_time = datetime.now() + timedelta(days=100)
-#         # Store User ID and Expiration Time in session state
-#         st.session_state.user_id = user_id
-#         st.session_state.expiration_time = expiration_time
-#     else:
-#         # Check if user ID has expired
-#         if datetime.now() > st.session_state.expiration_time
-#         # Regenerate user ID
-#         user_id = str(uuid.uuid4())
-#         # Set Expiration Time
-#         expiration_time = datetime.now() + timedelta(days=100)
-#         # Store User ID and Expiration Time in session state
-#         st.session_state.user_id = user_id
-#         st.session_state.expiration_time = expiration_time
-#     return user_id
-
 # Function to get a unique tab ID for current session
 def get_or_create_tab_ID():
     if 'tab_id' not in st.session_state:
@@ -61,7 +40,7 @@ def get_or_create_tab_ID():
 # Function to log user info
 def log_user_info(user_name, user_id, datetime_entered, tab_id):
     # Generate log entry
-    log_entry = f'{user_name} | {user_id} | {formatted_datetime_entered} | {tab_id}'
+    log_entry = f'{user_name}|{user_id}|{formatted_datetime_entered}|{tab_id}'
     # Append log entry to log file
     with open('user_log.txt', 'a') as file:
         file.write(log_entry)
