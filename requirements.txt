@@ -5,5 +5,5 @@ Pillow
 requests
 uuid
 datetime
-subprocess
 pytz
+os
