@@ -7,4 +7,3 @@ uuid
 datetime
 subprocess
 pytz
-os
