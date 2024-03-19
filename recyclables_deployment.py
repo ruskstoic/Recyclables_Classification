@@ -46,6 +46,8 @@ def log_user_info(user_name, user_id, datetime_entered, tab_id):
         file.write(log_entry)
     return log_entry
 
+user_name = st.text_input('Hi! What is your name?')
+
 ## Streamlit Interface
 st.title('Can We Predict Which Recyclable Category Your Trash is Under?')
 st.subheader("Model Disclaimer: Work in Progress 🚧\n\nOur model is in its early stages and is continuously undergoing training and improvements. \
@@ -71,10 +73,21 @@ if user_name:
     user_log_filename = 'user_log.txt'
     log_entry = log_user_info(user_name=user_name, user_id=user_id, datetime_entered=formatted_datetime_entered, tab_id=tab_id)
 
+    #Dispatch workflow
+    github_token = WORKFLOW_ACTION_TOKEN
+    subprocess.run([
+        'curl',
+        '-X', 'POST',
+        '-H', f'Authorization: token {github_token}',
+        '-d', f'{{"ref":"main","inputs":{{"user_info":"{log_entry}"}}}}',
+        f'https://api.github.com/repos/ruskstoic/Recyclables_Classification/actions/workflows/Log User Input/dispatches'
+        ])
+    st.success('User info logged successfully!')
+
     #Commit and push changes for logging user information
-    subprocess.run(['git', 'add', log_entry])
-    subprocess.run(['git', 'commit', '-m', 'Added user information'])
-    subprocess.run(['git', 'push', 'origin', 'main'])
+    # subprocess.run(['git', 'add', log_entry])
+    # subprocess.run(['git', 'commit', '-m', 'Added user information'])
+    # subprocess.run(['git', 'push', 'origin', 'main'])
 
     #Merge and display user info
     user_info = f'Name: {user_name} | User ID: {user_id} | Date Entered: {formatted_datetime_entered} | Tab ID: {tab_id}'
