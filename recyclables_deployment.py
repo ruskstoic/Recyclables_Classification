@@ -19,7 +19,6 @@ from PIL import Image
 import requests
 import uuid
 from datetime import datetime, timedelta
-import subprocess
 import pytz
 import os
 
