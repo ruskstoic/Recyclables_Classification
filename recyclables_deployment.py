@@ -38,12 +38,12 @@ def get_or_create_tab_ID():
     return st.session_state.tab_id
 
 # Function to log user info
-def log_user_info(user_name, user_id, datetime_entered, tab_id):
+def log_user_info(user_name, user_id, formatted_datetime_entered, tab_id):
     # Generate log entry
     log_entry = f'{user_name}|{user_id}|{formatted_datetime_entered}|{tab_id}'
-    # Append log entry to log file
-    with open('user_log.txt', 'a') as file:
-        file.write(log_entry)
+    # # Append log entry to log file
+    # with open('user_log.txt', 'a') as file:
+    #     file.write(log_entry)
     return log_entry
 
 
@@ -70,7 +70,7 @@ if user_name:
 
     #Logging user information
     user_log_filename = 'user_log.txt'
-    log_entry = log_user_info(user_name=user_name, user_id=user_id, datetime_entered=formatted_datetime_entered, tab_id=tab_id)
+    log_entry = log_user_info(user_name=user_name, user_id=user_id, formatted_datetime_entered=formatted_datetime_entered, tab_id=tab_id)
 
     #Dispatch workflow
     github_token = os.environ.get('WORKFLOW_ACTION_TOKEN')
