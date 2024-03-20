@@ -70,7 +70,8 @@ if user_name:
 
     #Logging user information
     user_log_filename = 'user_log.txt'
-    log_entry = log_user_info(user_name=user_name, user_id=user_id, formatted_datetime_entered=formatted_datetime_entered, tab_id=tab_id)
+    # log_entry = log_user_info(user_name=user_name, user_id=user_id, formatted_datetime_entered=formatted_datetime_entered, tab_id=tab_id)
+    log_entry = 'hi'
 
     #Dispatch workflow
     github_token = os.environ.get('WORKFLOW_ACTION_TOKEN')
