@@ -10,9 +10,8 @@ permissions:
 
 on:
   push:
-    paths:
-      - '.github/workflows/user_log.txt'
-  workflow_dispatch:
+    branches:
+      - main
 
 jobs:
   build:
@@ -38,7 +37,7 @@ jobs:
       - name: Run Streamlit App
         env:
           WORKFLOW_ACTION_TOKEN: ${{ secrets.WORKFLOW_ACTION_TOKEN }}
-        run: streamlit run app.py
+        run: streamlit run recyclables_deployment.py
 
       - name: Log User Info
         env:
