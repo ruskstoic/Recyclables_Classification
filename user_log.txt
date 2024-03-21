@@ -6,3 +6,4 @@ User input: $(log_entry)
 
 
 
+${LOG_ENTRY}
