@@ -12,6 +12,11 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      log_entry:
+        description: 'The log entry variable from the Streamlit app'
+        required: true
 
 jobs:
   build:
