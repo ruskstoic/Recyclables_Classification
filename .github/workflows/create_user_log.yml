@@ -9,9 +9,6 @@ permissions:
   pull-requests: write
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
     inputs:
       log_entry:
