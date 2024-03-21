@@ -74,19 +74,32 @@ if user_name:
 
     #Dispatch workflow
     github_token = os.environ.get('WORKFLOW_ACTION_TOKEN')
-    subprocess.run([
-        'curl',
-        '-X', 'POST',
-        '-H', f'Authorization: token {github_token}',
-        '-d', f'{{"ref":"main","inputs":{{"log_entry":"{log_entry}"}}}}',
-        f'https://api.github.com/repos/ruskstoic/Recyclables_Classification/actions/workflows/Log User Input/dispatches'
-        ])
-    st.success('User info logged successfully!')
-
-    #Commit and push changes for logging user information
-    # subprocess.run(['git', 'add', log_entry])
-    # subprocess.run(['git', 'commit', '-m', 'Added user information'])
-    # subprocess.run(['git', 'push', 'origin', 'main'])
+    workflow_dispatch_url = f'https://api.github.com/repos/ruskstoic/Recyclables_Classification/actions/workflows/Log%20User%20Input/dispatches'
+    headers = {
+        'Accept': 'application/vnd.github.v3+json',
+        'Authorization': f'token {github_token}'
+    }
+    payload = {
+        'ref': 'main',
+        'inputs': {
+            'log_entry': log_entry
+        }
+    }
+    response = requests.post(workflow_dispatch_url, headers=headers, json=payload)
+    
+    if response.ok:
+        st.success('User info logged successfully!')
+    else:
+        st.error('Failed to log user info.')
+    
+    # subprocess.run([
+    #     'curl',
+    #     '-X', 'POST',
+    #     '-H', f'Authorization: token {github_token}',
+    #     '-d', f'{{"ref":"main","inputs":{{"log_entry":"{log_entry}"}}}}',
+    #     f'https://api.github.com/repos/ruskstoic/Recyclables_Classification/actions/workflows/Log User Input/dispatches'
+    #     ])
+    # st.success('User info logged successfully!')
 
     #Merge and display user info
     user_info = f'Name: {user_name} | User ID: {user_id} | Date Entered: {formatted_datetime_entered} | Tab ID: {tab_id}'
