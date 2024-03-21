@@ -37,26 +37,27 @@ jobs:
           python-version: '3.9'
 
       - name: Install Dependencies
-        run: pip install -r requirements.txt
+        run: pip install gspread oauth2client
 
-      # - name: Run Streamlit App
+      - name: Update Google Sheets
+        env:
+          LOG_ENTRY: ${{ github.event.inputs.log_entry }}
+          GOOGLE_LOGUSER_SHEET_CREDENTIALS: ${{ secrets.GOOGLE_LOGUSER_SHEET_CREDENTIALS }}
+          GOOGLE_LOGUSER_SPREADSHEET_ID: ${{ secrets.GOOGLE_LOGUSER_SPREADSHEET_ID }}
+        run: |
+          python update_google_loguser_sheet.py
+
+      # - name: Log User Info
       #   env:
       #     WORKFLOW_ACTION_TOKEN: ${{ secrets.WORKFLOW_ACTION_TOKEN }}
-      #   run: streamlit run recyclables_deployment.py
-
-      - name: Log User Info
-        env:
-          WORKFLOW_ACTION_TOKEN: ${{ secrets.WORKFLOW_ACTION_TOKEN }}
-          LOG_ENTRY: ${{ github.event.inputs.log_entry }}
-        run: |
-          echo '${{ github.event_name }}'
-          echo 'Logging user info...'
-          echo '${{ env.LOG_ENTRY }}' >> user_log.txt
-          echo 'Github token: ${{ secrets.WORKFLOW_ACTION_TOKEN }}'
-          echo 'Working directory: $(pwd)'
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add user_log.txt
-          git commit -m 'Log user input'
-          git push
-        
+      #   run: |
+      #     echo '${{ github.event_name }}'
+      #     echo 'Logging user info...'
+      #     echo '${{ env.LOG_ENTRY }}' >> user_log.txt
+      #     echo 'Github token: ${{ secrets.WORKFLOW_ACTION_TOKEN }}'
+      #     echo 'Working directory: $(pwd)'
+      #     git config --local user.email "action@github.com"
+      #     git config --local user.name "GitHub Action"
+      #     git add user_log.txt
+      #     git commit -m 'Log user input'
+      #     git push
