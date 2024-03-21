@@ -91,7 +91,7 @@ if user_name:
     #Merge and display user info
     user_info = f'Name: {user_name} | User ID: {user_id} | Date Entered: {formatted_datetime_entered} | Tab ID: {tab_id}'
     st.subheader('User Information')
-    st.write(user_info + '\n')
+    st.write(log_entry + '\n')
     
     uploaded_image = st.file_uploader("Upload your image...", type=['jpeg','jpg','png'])
     
