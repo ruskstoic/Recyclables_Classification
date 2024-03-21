@@ -78,7 +78,7 @@ if user_name:
         'curl',
         '-X', 'POST',
         '-H', f'Authorization: token {github_token}',
-        '-d', f'{{"ref":"main","inputs":{{"user_info":"{log_entry}"}}}}',
+        '-d', f'{{"ref":"main","inputs":{{"log_entry":"{log_entry}"}}}}',
         f'https://api.github.com/repos/ruskstoic/Recyclables_Classification/actions/workflows/Log User Input/dispatches'
         ])
     st.success('User info logged successfully!')
