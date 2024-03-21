@@ -1,3 +1,4 @@
 Name | User_ID | Datetime Entered | Tab_ID
 User input: 
 User input: 
+User input: $(log_entry)
