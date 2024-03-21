@@ -47,10 +47,11 @@ jobs:
       - name: Log User Info
         env:
           WORKFLOW_ACTION_TOKEN: ${{ secrets.WORKFLOW_ACTION_TOKEN }}
+          LOG_ENTRY: ${{ github.event.inputs.log_entry }}
         run: |
           echo '${{ github.event_name }}'
           echo 'Logging user info...'
-          echo '${{ github.event.inputs.log_entry }}' >> user_log.txt
+          echo '${LOG_ENTRY}' >> user_log.txt
           echo 'Github token: ${{ secrets.WORKFLOW_ACTION_TOKEN }}'
           echo 'Working directory: $(pwd)'
           git config --local user.email "action@github.com"
