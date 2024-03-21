@@ -45,7 +45,7 @@ jobs:
         run: |
           echo '${{ github.event_name }}'
           echo 'Logging user info...'
-          echo '${{ log_entry }}' >> user_log.txt
+          echo '${{ github.event.inputs.log_entry }}' >> user_log.txt
           echo 'Github token: ${{ secrets.WORKFLOW_ACTION_TOKEN }}'
           echo 'Working directory: $(pwd)'
           git config --local user.email "action@github.com"
