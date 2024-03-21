@@ -1,0 +1,61 @@
+# name: Log User Input
+
+# # Set permissions on GITHUB_TOKEN to allow updates to GitHub Actions workflows
+# permissions:
+#   actions: write
+#   contents: write
+#   pages: write
+#   id-token: write
+#   pull-requests: write
+
+# on:
+#   push:
+#     branches:
+#       - main
+#   workflow_dispatch:
+#     inputs:
+#       log_entry:
+#         description: 'The log entry variable from the Streamlit app'
+#         required: true
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     # defaults:
+#     #   run:
+#     #     shell: bash
+#     #     working-directory: '.github/workflows'
+
+#     steps:
+#       - run: echo 'test test'
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
+
+#       - name: Set Up Python
+#         uses: actions/setup-python@v2
+#         with:
+#           python-version: '3.9'
+
+#       - name: Install Dependencies
+#         run: pip install -r requirements.txt
+
+#       # - name: Run Streamlit App
+#       #   env:
+#       #     WORKFLOW_ACTION_TOKEN: ${{ secrets.WORKFLOW_ACTION_TOKEN }}
+#       #   run: streamlit run recyclables_deployment.py
+
+#       - name: Log User Info
+#         env:
+#           WORKFLOW_ACTION_TOKEN: ${{ secrets.WORKFLOW_ACTION_TOKEN }}
+#           LOG_ENTRY: ${{ github.event.inputs.log_entry }}
+#         run: |
+#           echo '${{ github.event_name }}'
+#           echo 'Logging user info...'
+#           echo '${{ env.LOG_ENTRY }}' >> user_log.txt
+#           echo 'Github token: ${{ secrets.WORKFLOW_ACTION_TOKEN }}'
+#           echo 'Working directory: $(pwd)'
+#           git config --local user.email "action@github.com"
+#           git config --local user.name "GitHub Action"
+#           git add user_log.txt
+#           git commit -m 'Log user input'
+#           git push
