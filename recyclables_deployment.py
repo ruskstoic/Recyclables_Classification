@@ -22,6 +22,7 @@ from datetime import datetime, timedelta
 import pytz
 import os
 from streamlit_gsheets import GSheetsConnection
+improt pandas as pd
 
 ## Functions
 # Function to get or create a unique ID for current session
