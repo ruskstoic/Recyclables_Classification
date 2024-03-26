@@ -76,15 +76,15 @@ if user_name:
     #Create Google Sheet Connection Object
     conn = st.connection('gsheets', type=GSheetsConnection)
 
-    df = conn.update(
-        worksheet='Sheet1',
-        data=log_entry,
-    )
-
-    st.cache_data.clear()
-    st.write('It works!')
-
+    if st.button("Update worksheet"):
+        df = conn.update(
+            worksheet='Sheet1',
+            data=log_entry,
+        )
     
+        st.cache_data.clear()
+        st.write('It works!')
+
     
     # #Dispatch workflow
     # github_token = os.environ.get('WORKFLOW_ACTION_TOKEN')
