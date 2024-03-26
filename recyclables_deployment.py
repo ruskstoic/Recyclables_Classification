@@ -21,6 +21,7 @@ import uuid
 from datetime import datetime, timedelta
 import pytz
 import os
+from streamlit_gsheets import GSheetsConnection
 
 ## Functions
 # Function to get or create a unique ID for current session
@@ -72,28 +73,41 @@ if user_name:
     user_log_filename = 'user_log.txt'
     log_entry = log_user_info(user_name=user_name, user_id=user_id, formatted_datetime_entered=formatted_datetime_entered, tab_id=tab_id)
 
-    #Dispatch workflow
-    github_token = os.environ.get('WORKFLOW_ACTION_TOKEN')
-    workflow_dispatch_url = f'https://api.github.com/repos/ruskstoic/Recyclables_Classification/actions/workflows/Log%20User%20Input/dispatches'
-    headers = {
-        'Accept': 'application/vnd.github.v3+json',
-        'Authorization': f'token {github_token}'
-    }
-    payload = {
-        'ref': 'main',
-        'inputs': {
-            'log_entry': log_entry
-        }
-    }
-    response = requests.post(workflow_dispatch_url, headers=headers, json=payload)
-    st.write('Status Code:', response.status_code)
-    st.write('Content:', response.content)
-    st.write('Headers:', response.headers)
+    #Create Google Sheet Connection Object
+    conn = st.connection('gsheets', type=GSheetsConnection)
 
-    if response.ok:
-        st.success('User info logged successfully!')
-    else:
-        st.error('Failed to log user info.')
+    df = conn.update(
+        worksheet='Sheet1',
+        data=log_entry,
+    )
+
+    st.cache_data.clear()
+    st.write('It works!')
+
+    
+    
+    # #Dispatch workflow
+    # github_token = os.environ.get('WORKFLOW_ACTION_TOKEN')
+    # workflow_dispatch_url = f'https://api.github.com/repos/ruskstoic/Recyclables_Classification/actions/workflows/Log%20User%20Input/dispatches'
+    # headers = {
+    #     'Accept': 'application/vnd.github.v3+json',
+    #     'Authorization': f'token {github_token}'
+    # }
+    # payload = {
+    #     'ref': 'main',
+    #     'inputs': {
+    #         'log_entry': log_entry
+    #     }
+    # }
+    # response = requests.post(workflow_dispatch_url, headers=headers, json=payload)
+    # st.write('Status Code:', response.status_code)
+    # st.write('Content:', response.content)
+    # st.write('Headers:', response.headers)
+
+    # if response.ok:
+    #     st.success('User info logged successfully!')
+    # else:
+    #     st.error('Failed to log user info.')
     
     # subprocess.run([
     #     'curl',
