@@ -7,3 +7,4 @@ uuid
 datetime
 pytz
 st-gsheets-connection
+pandas
