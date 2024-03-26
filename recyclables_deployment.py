@@ -86,9 +86,9 @@ if user_name:
         }
     }
     response = requests.post(workflow_dispatch_url, headers=headers, json=payload)
-    print('Status Code:', response.status_code)
-    print('Content:', response.content)
-    print('Headers:', response.headers)
+    st.write('Status Code:', response.status_code)
+    st.write('Content:', response.content)
+    st.write('Headers:', response.headers)
 
     if response.ok:
         st.success('User info logged successfully!')
