@@ -40,12 +40,18 @@ def get_or_create_tab_ID():
 
 # Function to log user info
 def log_user_info(user_name, user_id, formatted_datetime_entered, tab_id):
-    # Generate log entry
-    log_entry = f'{user_name}|{user_id}|{formatted_datetime_entered}|{tab_id}'
-    # # Append log entry to log file
-    # with open('user_log.txt', 'a') as file:
-    #     file.write(log_entry)
-    return log_entry
+    #Create a dictionary
+    user_info = {
+        'Name': user_name,
+        'User_ID': user_id,
+        'Datetime_Entered': formatted_datetime_entered,
+        'Tab_ID': tab_id
+    }
+    
+    #Convert the dictionary to a DataFrame
+    log_entry_df = pd.DataFrame([user_info])
+    
+    return log_entry_df
 
 
 ## Streamlit Interface
@@ -76,14 +82,14 @@ if user_name:
     #Create Google Sheet Connection Object
     conn = st.connection('gsheets', type=GSheetsConnection)
 
-    if st.button("Update worksheet"):
-        df = conn.update(
-            worksheet='Sheet1',
-            data=log_entry,
-        )
-    
-        st.cache_data.clear()
-        st.write('It works!')
+    # if st.button("Update worksheet"):
+    df = conn.update(
+        worksheet='Sheet1',
+        data=log_entry,
+    )
+
+    st.cache_data.clear()
+    st.write('It works!')
 
     
     # #Dispatch workflow
