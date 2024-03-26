@@ -6,4 +6,4 @@ requests
 uuid
 datetime
 pytz
-streamlit_gsheets
+streamlit-gsheets
