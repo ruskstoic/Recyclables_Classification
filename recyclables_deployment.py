@@ -65,8 +65,8 @@ def _get_session():
     runtime = get_instance()
     session_id = get_script_run_ctx().session_id
     session_info = runtime._session_mgr.get_session_info(session_id)
-    print(session_id)
-    print(session_info)
+    st.write(session_id)
+    st.write(session_info)
     if session_info is None:
         raise RuntimeError("Couldn't get your Streamlit Session object.")
     return session_info.session
@@ -78,8 +78,8 @@ Please note that it's a beginner model, and while it shows promising results, it
 
 app_session = _get_session()
 st.write(app_session)
-session_id = app_session.idstr
-st.write(session_id)
+# session_id = app_session.idstr
+# st.write(session_id)
 
 
 #Prompt user to enter their name
