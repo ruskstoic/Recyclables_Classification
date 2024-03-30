@@ -24,6 +24,8 @@ import os
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 import streamlit_analytics
+from streamlit.runtime import get_instance
+from streamlit.runtime.scriptrunner import get_script_run_ctx
 
 #Streamlit Tracker Start
 streamlit_analytics.start_tracking()
@@ -58,8 +60,6 @@ def log_user_info(user_name, user_id, formatted_datetime_entered, tab_id):
 
 #TEST
 def _get_session():
-    from streamlit.runtime import get_instance
-    from streamlit.runtime.scriptrunner import get_script_run_ctx
     runtime = get_instance()
     session_id = get_script_run_ctx().session_id
     session_info = runtime._session_mgr.get_session_info(session_id)
