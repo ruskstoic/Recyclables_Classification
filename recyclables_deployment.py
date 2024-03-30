@@ -96,7 +96,7 @@ if user_name:
     existing_data = conn.read(worksheet='Sheet1')
     
     # Convert the existing data to a DataFrame (assuming it's already in tabular format)
-    existing_df = pd.DataFrame([existing_data], columns=['Name', 'User_ID', 'Datetime_Entered', 'Tab_ID'])
+    existing_df = pd.DataFrame(existing_data, columns=['Name', 'User_ID', 'Datetime_Entered', 'Tab_ID'])
     
     # Concatenate the existing DataFrame with the new entry DataFrame
     combined_df = pd.concat([existing_df, log_entry_df], ignore_index=True)
