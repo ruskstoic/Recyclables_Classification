@@ -52,11 +52,20 @@ def log_user_info(user_name, user_id, formatted_datetime_entered, tab_id):
         'Datetime_Entered': formatted_datetime_entered,
         'Tab_ID': tab_id
     }
-    
     #Convert the dictionary to a DataFrame
     log_entry_df = pd.DataFrame([user_info])
-    
     return log_entry_df
+
+#TEST
+def _get_session():
+    from streamlit.runtime import get_instance
+    from streamlit.runtime.scriptrunner import get_script_run_ctx
+    runtime = get_instance()
+    session_id = get_script_run_ctx().session_id
+    session_info = runtime._session_mgr.get_session_info(session_id)
+    if session_info is None:
+        raise RuntimeError("Couldn't get your Streamlit Session object.")
+    return session_info.session
 
 ## Streamlit Interface
 st.title('Can We Predict Which Recyclable Category Your Trash is Under?')
@@ -73,11 +82,14 @@ if user_name:
     #Get or create a unique tab ID for current session
     tab_id = get_or_create_tab_ID()
 
+    #TEST
+
     #Create datetime and format it for log entry
     datetime_format = '%Y-%m-%d %H:%M:%S'
     converted_timezone = pytz.timezone('Asia/Singapore')
     converted_datetime_entered = datetime.now(converted_timezone)
-    formatted_datetime_entered = converted_datetime_entered.strftime(datetime_format)
+    # formatted_datetime_entered = converted_datetime_entered.strftime(datetime_format)
+    formatted_datetime_entered = _get_session()
 
     #Logging user information
     user_log_filename = 'user_log.txt'
