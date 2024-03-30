@@ -162,6 +162,4 @@ if user_name:
                     st.write('Failed to download the model file from GitHub.')
 
 #Streamlit Tracker End
-streamlit_analytics.stop_tracking()
-
-
+streamlit_analytics.stop_tracking(unsafe_password="test123"))
