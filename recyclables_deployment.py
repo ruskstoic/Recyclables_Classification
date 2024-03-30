@@ -24,6 +24,9 @@ import os
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 
+#Streamlit Tracker Start
+streamlit_analytics.start_tracking()
+
 ## Functions
 # Function to get or create a unique ID for current session
 def get_or_create_user_ID():
@@ -156,5 +159,8 @@ if user_name:
                     st.write(f'Confidence: {np.max(predictions) * 100:.2f}%')
                 else:
                     st.write('Failed to download the model file from GitHub.')
+
+#Streamlit Tracker End
+streamlit_analytics.stop_tracking()
 
 
