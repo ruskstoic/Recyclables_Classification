@@ -50,11 +50,9 @@ def log_user_info(user_name, user_id, formatted_datetime_entered, tab_id):
     }
     
     #Convert the dictionary to a DataFrame
-    # log_entry_df = pd.DataFrame([user_info])
+    log_entry_df = pd.DataFrame([user_info])
     
-    # return log_entry_df
-
-    return user_info
+    return log_entry_df
 
 ## Streamlit Interface
 st.title('Can We Predict Which Recyclable Category Your Trash is Under?')
@@ -98,13 +96,10 @@ if user_name:
     existing_data = conn.read(worksheet='Sheet1')
     
     # Convert the existing data to a DataFrame (assuming it's already in tabular format)
-    existing_df = pd.DataFrame(existing_data)
-    
-    # Create a DataFrame for the new log entry
-    new_entry_df = pd.DataFrame([log_entry])
+    existing_df = pd.DataFrame([existing_data], columns=['Name', 'User_ID', 'Datetime_Entered', 'Tab_ID'])
     
     # Concatenate the existing DataFrame with the new entry DataFrame
-    combined_df = pd.concat([existing_df, new_entry_df], ignore_index=True)
+    combined_df = pd.concat([existing_df, log_entry_df], ignore_index=True)
     
     # Write the combined DataFrame back to the worksheet
     conn.update(worksheet='Sheet1', data=combined_df.values.tolist())
