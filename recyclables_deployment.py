@@ -93,6 +93,9 @@ if user_name:
     # st.write('It works!')
 
     #TEST
+    clear_df = pd.DataFrame(columns=['Name', 'User_ID', 'Datetime_Entered', 'Tab_ID'])
+    conn.update(worksheet='Sheet1', data=clear_df)
+    
     # Read existing data from the worksheet
     existing_data = conn.read(worksheet='Sheet1', usecols=[0,1,2,3])
     st.write('existing data', existing_data)
