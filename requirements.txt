@@ -9,3 +9,7 @@ pytz
 st-gsheets-connection
 pandas
 streamlit-analytics
+streamlit.runtime
+get-instance
+streamlit.runtime.scriptrunner
+get_script_run_ctx
