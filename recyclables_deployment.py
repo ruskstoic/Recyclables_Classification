@@ -94,12 +94,15 @@ if user_name:
     #TEST
     # Read existing data from the worksheet
     existing_data = conn.read(worksheet='Sheet1')
+    st.write('existing data', existing_data)
     
     # Convert the existing data to a DataFrame (assuming it's already in tabular format)
     existing_df = pd.DataFrame(existing_data, columns=['Name', 'User_ID', 'Datetime_Entered', 'Tab_ID'])
+    st.write('eexisting_df', existing_df)
     
     # Concatenate the existing DataFrame with the new entry DataFrame
     combined_df = pd.concat([existing_df, log_entry_df], ignore_index=True)
+    st.write('combined_df', combined_df)
     
     # Write the combined DataFrame back to the worksheet
     conn.update(worksheet='Sheet1', data=combined_df)
@@ -108,38 +111,6 @@ if user_name:
     st.cache_data.clear()
     st.write('Data appended successfully!')
     
-    # #Dispatch workflow
-    # github_token = os.environ.get('WORKFLOW_ACTION_TOKEN')
-    # workflow_dispatch_url = f'https://api.github.com/repos/ruskstoic/Recyclables_Classification/actions/workflows/Log%20User%20Input/dispatches'
-    # headers = {
-    #     'Accept': 'application/vnd.github.v3+json',
-    #     'Authorization': f'token {github_token}'
-    # }
-    # payload = {
-    #     'ref': 'main',
-    #     'inputs': {
-    #         'log_entry': log_entry
-    #     }
-    # }
-    # response = requests.post(workflow_dispatch_url, headers=headers, json=payload)
-    # st.write('Status Code:', response.status_code)
-    # st.write('Content:', response.content)
-    # st.write('Headers:', response.headers)
-
-    # if response.ok:
-    #     st.success('User info logged successfully!')
-    # else:
-    #     st.error('Failed to log user info.')
-    
-    # subprocess.run([
-    #     'curl',
-    #     '-X', 'POST',
-    #     '-H', f'Authorization: token {github_token}',
-    #     '-d', f'{{"ref":"main","inputs":{{"log_entry":"{log_entry}"}}}}',
-    #     f'https://api.github.com/repos/ruskstoic/Recyclables_Classification/actions/workflows/Log User Input/dispatches'
-    #     ])
-    # st.success('User info logged successfully!')
-
     #Merge and display user info
     user_info = f'Name: {user_name} | User ID: {user_id} | Date Entered: {formatted_datetime_entered} | Tab ID: {tab_id}'
     st.subheader('User Information')
