@@ -8,3 +8,4 @@ datetime
 pytz
 st-gsheets-connection
 pandas
+streamlit_analytics
