@@ -93,11 +93,13 @@ if user_name:
     # st.write('It works!')
 
     #TEST
-    clear_df = pd.DataFrame(columns=['Name', 'User_ID', 'Datetime_Entered', 'Tab_ID'])
-    conn.update(worksheet='Sheet1', data=clear_df)
+    # clear_df = pd.DataFrame(columns=['Name', 'User_ID', 'Datetime_Entered', 'Tab_ID'])
+    # conn.update(worksheet='Sheet1', data=clear_df)
     
     # Read existing data from the worksheet
-    existing_data = conn.read(worksheet='Sheet1', usecols=[0,1,2,3])
+    # existing_data = conn.read(worksheet='Sheet1', usecols=[0,1,2,3])
+    URL = 'https://docs.google.com/spreadsheets/d/1WaBOS1OUEeWSEdMoH6p55LPRXVLd4vbqf8Cy-Wm51v8/edit#gid=0'
+    existing_data = pd.read_csv(URL, dtype=str)
     st.write('existing data', existing_data)
     
     # Convert the existing data to a DataFrame (assuming it's already in tabular format)
