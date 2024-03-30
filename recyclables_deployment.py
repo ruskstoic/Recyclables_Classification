@@ -23,6 +23,7 @@ import pytz
 import os
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
+import streamlit_analytics
 
 #Streamlit Tracker Start
 streamlit_analytics.start_tracking()
