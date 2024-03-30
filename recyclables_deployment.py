@@ -82,36 +82,16 @@ if user_name:
 
     #Create Google Sheet Connection Object
     conn = st.connection('gsheets', type=GSheetsConnection)
-
-    # if st.button("Update worksheet"):
-    # df = conn.update(
-    #     worksheet='Sheet1',
-    #     data=log_entry,
-    # )
-
-    # st.cache_data.clear()
-    # st.write('It works!')
-
-    #TEST
-    # clear_df = pd.DataFrame(columns=['Name', 'User_ID', 'Datetime_Entered', 'Tab_ID'])
-    # conn.update(worksheet='Sheet1', data=clear_df)
     
     # Read existing data from the worksheet
     existing_data = conn.read(worksheet='Sheet1', usecols=[0,1,2,3], end='A')
-    # URL = 'https://docs.google.com/spreadsheets/d/1WaBOS1OUEeWSEdMoH6p55LPRXVLd4vbqf8Cy-Wm51v8/edit#gid=0'
-    # sheet_name = 'Sheet1'
-    # sheet_id = '1WaBOS1OUEeWSEdMoH6p55LPRXVLd4vbqf8Cy-Wm51v8'
-    # URL = f"<https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={sheet_name}>"
-    # existing_data = pd.read_csv(URL, dtype=str)
-    st.write('existing data', existing_data)
     
     # Convert the existing data to a DataFrame (assuming it's already in tabular format)
     existing_df = pd.DataFrame(existing_data, columns=['Name', 'User_ID', 'Datetime_Entered', 'Tab_ID'])
-    st.write('eexisting_df', existing_df)
     
     # Concatenate the existing DataFrame with the new entry DataFrame
     combined_df = pd.concat([existing_df, log_entry_df], ignore_index=True)
-    st.write('combined_df', combined_df)
+    # st.write('combined_df', combined_df)
     
     # Write the combined DataFrame back to the worksheet
     conn.update(worksheet='Sheet1', data=combined_df)
