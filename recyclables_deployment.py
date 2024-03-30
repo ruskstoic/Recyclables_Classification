@@ -50,7 +50,7 @@ def log_user_info(user_name, user_id, formatted_datetime_entered, tab_id):
     }
     
     #Convert the dictionary to a DataFrame
-    log_entry_df = pd.DataFrame([user_info])
+    # log_entry_df = pd.DataFrame([user_info])
     
     return log_entry_df
 
