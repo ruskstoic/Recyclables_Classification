@@ -94,7 +94,7 @@ if user_name:
 
     #TEST
     # Read existing data from the worksheet
-    existing_data = conn.read(worksheet='Sheet1')
+    existing_data = conn.read(worksheet='Sheet1', usecols=[0,1,2,3])
     st.write('existing data', existing_data)
     
     # Convert the existing data to a DataFrame (assuming it's already in tabular format)
