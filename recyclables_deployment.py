@@ -84,14 +84,33 @@ if user_name:
     conn = st.connection('gsheets', type=GSheetsConnection)
 
     # if st.button("Update worksheet"):
-    df = conn.update(
-        worksheet='Sheet1',
-        data=log_entry,
-    )
+    # df = conn.update(
+    #     worksheet='Sheet1',
+    #     data=log_entry,
+    # )
 
+    # st.cache_data.clear()
+    # st.write('It works!')
+
+    #TEST
+    # Read existing data from the worksheet
+    existing_data = conn.read(worksheet='Sheet1')
+    
+    # Convert the existing data to a DataFrame (assuming it's already in tabular format)
+    existing_df = pd.DataFrame(existing_data)
+    
+    # Create a DataFrame for the new log entry
+    new_entry_df = pd.DataFrame([log_entry])
+    
+    # Concatenate the existing DataFrame with the new entry DataFrame
+    combined_df = pd.concat([existing_df, new_entry_df], ignore_index=True)
+    
+    # Write the combined DataFrame back to the worksheet
+    conn.update(worksheet='Sheet1', data=combined_df.values.tolist())
+    
+    # Clear cache and display success message
     st.cache_data.clear()
-    st.write('It works!')
-
+    st.write('Data appended successfully!')
     
     # #Dispatch workflow
     # github_token = os.environ.get('WORKFLOW_ACTION_TOKEN')
