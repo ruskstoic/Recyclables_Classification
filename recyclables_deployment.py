@@ -88,8 +88,10 @@ if user_name:
     datetime_format = '%Y-%m-%d %H:%M:%S'
     converted_timezone = pytz.timezone('Asia/Singapore')
     converted_datetime_entered = datetime.now(converted_timezone)
-    # formatted_datetime_entered = converted_datetime_entered.strftime(datetime_format)
-    formatted_datetime_entered = _get_session()
+    formatted_datetime_entered = converted_datetime_entered.strftime(datetime_format)
+
+    hi = _get_session()
+    st.write(hi)
 
     #Logging user information
     user_log_filename = 'user_log.txt'
