@@ -97,12 +97,12 @@ if user_name:
     # conn.update(worksheet='Sheet1', data=clear_df)
     
     # Read existing data from the worksheet
-    # existing_data = conn.read(worksheet='Sheet1', usecols=[0,1,2,3])
+    existing_data = conn.read(worksheet='Sheet1', usecols=[0,1,2,3], end='A')
     # URL = 'https://docs.google.com/spreadsheets/d/1WaBOS1OUEeWSEdMoH6p55LPRXVLd4vbqf8Cy-Wm51v8/edit#gid=0'
-    sheet_name = 'Sheet1'
-    sheet_id = '1WaBOS1OUEeWSEdMoH6p55LPRXVLd4vbqf8Cy-Wm51v8'
-    URL = f"<https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={sheet_name}>"
-    existing_data = pd.read_csv(URL, dtype=str)
+    # sheet_name = 'Sheet1'
+    # sheet_id = '1WaBOS1OUEeWSEdMoH6p55LPRXVLd4vbqf8Cy-Wm51v8'
+    # URL = f"<https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={sheet_name}>"
+    # existing_data = pd.read_csv(URL, dtype=str)
     st.write('existing data', existing_data)
     
     # Convert the existing data to a DataFrame (assuming it's already in tabular format)
