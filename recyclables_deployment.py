@@ -54,6 +54,7 @@ def log_user_info(user_name, user_id, formatted_datetime_entered, tab_id):
     
     return log_entry_df
 
+    return user_info
 
 ## Streamlit Interface
 st.title('Can We Predict Which Recyclable Category Your Trash is Under?')
