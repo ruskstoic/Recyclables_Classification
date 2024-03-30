@@ -72,6 +72,12 @@ st.title('Can We Predict Which Recyclable Category Your Trash is Under?')
 st.subheader("Model Disclaimer: Work in Progress 🚧\n\nOur model is in its early stages and is continuously undergoing training and improvements. \
 Please note that it's a beginner model, and while it shows promising results, it is not perfect. We appreciate your understanding as we strive to enhance its performance over time.")
 
+app_session = _get_session()
+st.write(app_session)
+session_id = app_session.idstr
+st.write(session_id)
+
+
 #Prompt user to enter their name
 user_name = st.text_input('Hi! What is your name?')
 
@@ -82,16 +88,13 @@ if user_name:
     #Get or create a unique tab ID for current session
     tab_id = get_or_create_tab_ID()
 
-    #TEST
-
     #Create datetime and format it for log entry
     datetime_format = '%Y-%m-%d %H:%M:%S'
     converted_timezone = pytz.timezone('Asia/Singapore')
     converted_datetime_entered = datetime.now(converted_timezone)
     formatted_datetime_entered = converted_datetime_entered.strftime(datetime_format)
 
-    hi = _get_session()
-    st.write(hi)
+    
 
     #Logging user information
     user_log_filename = 'user_log.txt'
