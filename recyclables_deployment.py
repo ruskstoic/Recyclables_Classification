@@ -42,12 +42,14 @@ cookies = EncryptedCookieManager(
 )
 if not cookies.ready(): # Wait for the component to load and send us current cookies.
     st.stop()
-    
-# Get the unique user ID from the cookie or generate a new one
-user_id = cookies.get('user_id', generate_new=True)
 
-# Save the user ID in the cookie
-cookies['user_id'] = user_id
+# Retrieve the user_id from the cookies
+user_id = cookies.get("user_id")
+    
+# If user_id is None, generate a new one
+if user_id is None:
+    user_id = str(uuid.uuid4())
+    cookies["user_id"] = user_id
 
 # Display the user ID
 st.write('User ID:', user_id)
