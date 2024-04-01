@@ -33,7 +33,6 @@ from streamlit_cookies_manager import EncryptedCookieManager
 streamlit_analytics.start_tracking()
 
 ## Cookies Manager
-# cookies_manager_password = os.environ.get("STREAMLIT_COOKIES_MANAGER_PASSWORD")
 cookies = EncryptedCookieManager(
     # This prefix will get added to all your cookie names. This way you can run your app on Streamlit Cloud without cookie name clashes with other apps.
     prefix="recyclables-class/",
@@ -54,6 +53,9 @@ if cookies_user_id is None:
 # Display the user ID
 st.write('User ID:', cookies_user_id)
 st.write("Current cookies:", cookies)
+#TEST IP ADDRESS
+user_ip = st.request.ip
+st.write("User IP address:", user_ip)
 
 # value = st.text_input("New value for a cookie")
 # if st.button("Change the cookie"):
