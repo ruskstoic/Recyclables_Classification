@@ -24,10 +24,10 @@ import os
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 import streamlit_analytics
-from streamlit.runtime import get_instance
-from streamlit.runtime.scriptrunner import get_script_run_ctx
-from streamlit.runtime.scriptrunner.script_run_context import get_script_run_ctx
-
+# from streamlit.runtime import get_instance
+# from streamlit.runtime.scriptrunner import get_script_run_ctx
+# from streamlit.runtime.scriptrunner.script_run_context import get_script_run_ctx
+from streamlit_cookies_manager import EncryptedCookieManager
 
 #Streamlit Tracker Start
 streamlit_analytics.start_tracking()
@@ -60,26 +60,10 @@ def log_user_info(user_name, user_id, formatted_datetime_entered, tab_id):
     log_entry_df = pd.DataFrame([user_info])
     return log_entry_df
 
-#TEST
-def _get_session():
-    runtime = get_instance()
-    session_id = get_script_run_ctx().session_id
-    session_info = runtime._session_mgr.get_session_info(session_id)
-    st.write(session_id)
-    st.write(session_info)
-    if session_info is None:
-        raise RuntimeError("Couldn't get your Streamlit Session object.")
-    return session_info.session
-
 ## Streamlit Interface
 st.title('Can We Predict Which Recyclable Category Your Trash is Under?')
 st.subheader("Model Disclaimer: Work in Progress 🚧\n\nOur model is in its early stages and is continuously undergoing training and improvements. \
 Please note that it's a beginner model, and while it shows promising results, it is not perfect. We appreciate your understanding as we strive to enhance its performance over time.")
-
-app_session = _get_session()
-st.write(app_session)
-# session_id = app_session.idstr
-# st.write(session_id)
 
 
 #Prompt user to enter their name
@@ -97,8 +81,6 @@ if user_name:
     converted_timezone = pytz.timezone('Asia/Singapore')
     converted_datetime_entered = datetime.now(converted_timezone)
     formatted_datetime_entered = converted_datetime_entered.strftime(datetime_format)
-
-    
 
     #Logging user information
     user_log_filename = 'user_log.txt'
