@@ -29,8 +29,35 @@ from streamlit.runtime.scriptrunner import get_script_run_ctx
 from streamlit.runtime.scriptrunner.script_run_context import get_script_run_ctx
 from streamlit_cookies_manager import EncryptedCookieManager
 
-#Streamlit Tracker Start
+## Streamlit Tracker Start
 streamlit_analytics.start_tracking()
+
+## Cookies Manager
+cookies_manager_password = os.environ.get("COOKIES_PASSWORD")
+cookies = EncryptedCookieManager(
+    # This prefix will get added to all your cookie names. This way you can run your app on Streamlit Cloud without cookie name clashes with other apps.
+    prefix="recyclables-class/",
+    # You should really setup a long COOKIES_PASSWORD secret if you're running on Streamlit Cloud.
+    password=cookies_manager_password,
+)
+if not cookies.ready(): # Wait for the component to load and send us current cookies.
+    st.stop()
+    
+# Get the unique user ID from the cookie or generate a new one
+user_id = cookies.get('user_id', generate_new=True)
+
+# Save the user ID in the cookie
+cookies['user_id'] = user_id
+
+# Display the user ID
+st.write('User ID:', user_id)
+
+st.write("Current cookies:", cookies)
+value = st.text_input("New value for a cookie")
+if st.button("Change the cookie"):
+    cookies['a-cookie'] = value  # This will get saved on next rerun
+    if st.button("No really, change it now"):
+        cookies.save()  # Force saving the cookies now, without a rerun
 
 ## Functions
 # Function to get or create a unique ID for current session
