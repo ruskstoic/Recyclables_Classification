@@ -52,7 +52,7 @@ if cookies_user_id is None:
     cookies["user_id"] = cookies_user_id
 
 # Display the user ID
-st.write('User ID:', user_id)
+st.write('User ID:', cookies_user_id)
 st.write("Current cookies:", cookies)
 
 # value = st.text_input("New value for a cookie")
