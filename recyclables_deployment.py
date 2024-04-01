@@ -33,7 +33,7 @@ from streamlit_cookies_manager import EncryptedCookieManager
 streamlit_analytics.start_tracking()
 
 ## Cookies Manager
-cookies_manager_password = os.environ.get("COOKIES_PASSWORD")
+cookies_manager_password = os.environ.get("STREAMLIT_COOKIES_MANAGER_PASSWORD")
 cookies = EncryptedCookieManager(
     # This prefix will get added to all your cookie names. This way you can run your app on Streamlit Cloud without cookie name clashes with other apps.
     prefix="recyclables-class/",
