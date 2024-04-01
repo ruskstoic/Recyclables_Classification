@@ -54,8 +54,8 @@ if cookies_user_id is None:
 st.write('User ID:', cookies_user_id)
 st.write("Current cookies:", cookies)
 #TEST IP ADDRESS
-user_ip = st.request.ip
-st.write("User IP address:", user_ip)
+server_ip = st.server.server_address[0]
+st.write("Streamlit server IP address:", server_ip)
 
 # value = st.text_input("New value for a cookie")
 # if st.button("Change the cookie"):
