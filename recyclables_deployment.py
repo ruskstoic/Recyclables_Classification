@@ -44,30 +44,30 @@ if not cookies.ready(): # Wait for the component to load and send us current coo
     st.stop()
 
 # Retrieve the user_id from the cookies
-user_id = cookies.get("user_id")
+cookies_user_id = cookies.get("user_id")
     
 # If user_id is None, generate a new one
 if user_id is None:
-    user_id = str(uuid.uuid4())
-    cookies["user_id"] = user_id
+    cookies_user_id = str(uuid.uuid4())
+    cookies["user_id"] = cookies_user_id
 
 # Display the user ID
 st.write('User ID:', user_id)
-
 st.write("Current cookies:", cookies)
-value = st.text_input("New value for a cookie")
-if st.button("Change the cookie"):
-    cookies['a-cookie'] = value  # This will get saved on next rerun
-    if st.button("No really, change it now"):
-        cookies.save()  # Force saving the cookies now, without a rerun
+
+# value = st.text_input("New value for a cookie")
+# if st.button("Change the cookie"):
+#     cookies['a-cookie'] = value  # This will get saved on next rerun
+#     if st.button("No really, change it now"):
+#         cookies.save()  # Force saving the cookies now, without a rerun
 
 ## Functions
 # Function to get or create a unique ID for current session
-def get_or_create_user_ID():
-    if 'user_id' not in st.session_state:
-        # Generate a UUID for the tab ID
-        st.session_state.user_id = str(uuid.uuid4())
-    return st.session_state.user_id
+# def get_or_create_user_ID():
+#     if 'user_id' not in st.session_state:
+#         # Generate a UUID for the tab ID
+#         st.session_state.user_id = str(uuid.uuid4())
+#     return st.session_state.user_id
 
 # Function to get a unique tab ID for current session
 def get_or_create_tab_ID():
@@ -100,7 +100,7 @@ user_name = st.text_input('Hi! What is your name?')
 
 if user_name:
     #Get or create a unique user ID for current session
-    user_id = get_or_create_user_ID()
+    user_id = cookies["user_id"]
 
     #Get or create a unique tab ID for current session
     tab_id = get_or_create_tab_ID()
