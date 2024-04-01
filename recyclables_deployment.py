@@ -47,7 +47,7 @@ if not cookies.ready(): # Wait for the component to load and send us current coo
 cookies_user_id = cookies.get("user_id")
     
 # If user_id is None, generate a new one
-if user_id is None:
+if cookies_user_id is None:
     cookies_user_id = str(uuid.uuid4())
     cookies["user_id"] = cookies_user_id
 
