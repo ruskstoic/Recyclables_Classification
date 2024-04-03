@@ -29,6 +29,7 @@ from streamlit.runtime.scriptrunner import get_script_run_ctx
 from streamlit.runtime.scriptrunner.script_run_context import get_script_run_ctx
 from streamlit_cookies_manager import EncryptedCookieManager
 from flask import Flask, request, jsonify
+import threading
 from flask_cors import CORS
 
 
@@ -64,7 +65,8 @@ app = Flask(__name__)
 CORS(app)
 
 # # Display a text input field for the user's IP address
-# user_ip = st.text_input("User IP Address", "")
+user_ip = None
+user_ip = st.text_input("User IPA", "")
 
 # Define a route for handling POST requests
 @app.route('/update-ip', methods=['POST'])
@@ -72,21 +74,21 @@ def update_ip():
     data = request.json
     if 'ip' in data:
         ip_address = data['ip']
+        user_ip = ip_address
         st.write('User IP:', ip_address)
         return jsonify({'message': 'User IP received successfully'}), 200
     else:
         return jsonify({'error': 'IP address not found in request'}), 400
 
 # Run the Flask app in a separate thread
-import threading
-threading.Thread(target=app.run, kwargs={'port': 5001}).start()
+threading.Thread(target=app.run, kwargs={'port': 5002}).start()
 
 # Display a message in the Streamlit app
 st.write('Flask app is running.')
 
 # If you receive an IP address from the Flask server, update the text input field
 if user_ip:
-    update_ip_address(user_ip)
+    user_ip_input.value = user_ip
 
 
 # # Embed the HTML code in your Streamlit app
