@@ -29,6 +29,7 @@ from streamlit.runtime.scriptrunner import get_script_run_ctx
 from streamlit.runtime.scriptrunner.script_run_context import get_script_run_ctx
 from streamlit_cookies_manager import EncryptedCookieManager
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 
 ## Streamlit Tracker Start
@@ -60,6 +61,7 @@ st.write("Current cookies:", cookies)
 # TEST IP Address
 # Create a Flask app
 app = Flask(__name__)
+CORS(app)
 
 # Display a text input field for the user's IP address
 user_ip = st.text_input("User IP Address", "")
