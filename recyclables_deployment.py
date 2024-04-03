@@ -56,10 +56,6 @@ st.write('User ID:', cookies_user_id)
 st.write("Current cookies:", cookies)
 
 # TEST IP Address
-# Load and embed the HTML file with JavaScript code
-with open('<insert path to html>', 'r') as f:
-    html_code = f.read()
-
 # Embed the HTML code in your Streamlit app
 st.markdown(html_code, unsafe_allow_html=False)
 with open("path/to/your/get_user_ip.html", "r") as f:
@@ -67,7 +63,7 @@ with open("path/to/your/get_user_ip.html", "r") as f:
 
 # Write IP Address
 def streamlit_endpoint():
-    if st.request.method = 'POST':
+    if st.request.method == 'POST':
         data = st.request.body
         ip_address = json.loads(data)['ip']
         st.write('User IP:', ip_address)
