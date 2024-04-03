@@ -11,3 +11,4 @@ pandas
 streamlit-analytics
 streamlit-cookies-manager
 flask
+flask-cors
