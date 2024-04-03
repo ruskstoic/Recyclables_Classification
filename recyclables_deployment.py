@@ -67,7 +67,7 @@ def streamlit_endpoint():
         ip_address = json.loads(data)['ip']
         st.write('User IP:', ip_address)
 
-streamlit_endpoint()
+# streamlit_endpoint()
 
 # value = st.text_input("New value for a cookie")
 # if st.button("Change the cookie"):
