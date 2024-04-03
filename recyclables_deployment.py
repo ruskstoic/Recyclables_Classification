@@ -28,6 +28,8 @@ from streamlit.runtime import get_instance
 from streamlit.runtime.scriptrunner import get_script_run_ctx
 from streamlit.runtime.scriptrunner.script_run_context import get_script_run_ctx
 from streamlit_cookies_manager import EncryptedCookieManager
+from flask import Flask, request, jsonify
+
 
 ## Streamlit Tracker Start
 streamlit_analytics.start_tracking()
@@ -56,17 +58,38 @@ st.write('User ID:', cookies_user_id)
 st.write("Current cookies:", cookies)
 
 # TEST IP Address
-# Embed the HTML code in your Streamlit app
-with open("static/IPA.html", "r") as f:
-    html_code = f.read()
+# Create a Flask app
+app = Flask(__name__)
 
-# Write IP Address
-def streamlit_endpoint():
-    if st.request.method == 'POST':
-        data = st.request.body
-        ip_address = json.loads(data)['ip']
+# Define a route for handling POST requests
+@app.route('/update-ip', methods=['POST'])
+def update_ip():
+    data = request.json
+    if 'ip' in data:
+        ip_address = data['ip']
         st.write('User IP:', ip_address)
+        return jsonify({'message': 'User IP received successfully'}), 200
+    else:
+        return jsonify({'error': 'IP address not found in request'}), 400
 
+# Run the Flask app in a separate thread
+import threading
+threading.Thread(target=app.run, kwargs={'port': 5000}).start()
+
+# Display a message in the Streamlit app
+st.write('Flask app is running. Use the /update-ip endpoint to send IP addresses.')
+
+
+# # Embed the HTML code in your Streamlit app
+# with open("static/IPA.html", "r") as f:
+#     html_code = f.read()
+
+# # Write IP Address
+# def streamlit_endpoint():
+#     if st.request.method == 'POST':
+#         data = st.request.body
+#         ip_address = json.loads(data)['ip']
+#         st.write('User IP:', ip_address)
 # streamlit_endpoint()
 
 # value = st.text_input("New value for a cookie")
