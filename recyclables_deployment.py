@@ -79,14 +79,10 @@ def update_ip():
 
 # Run the Flask app in a separate thread
 import threading
-threading.Thread(target=app.run, kwargs={'port': 5000}).start()
+threading.Thread(target=app.run, kwargs={'port': 5001}).start()
 
 # Display a message in the Streamlit app
 st.write('Flask app is running.')
-
-if __name__ == '__main__':
-    app.run(debug=True)
-python app.py
 
 # If you receive an IP address from the Flask server, update the text input field
 if user_ip:
