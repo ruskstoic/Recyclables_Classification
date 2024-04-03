@@ -57,7 +57,6 @@ st.write("Current cookies:", cookies)
 
 # TEST IP Address
 # Embed the HTML code in your Streamlit app
-st.markdown(html_code, unsafe_allow_html=False)
 with open("path/to/your/get_user_ip.html", "r") as f:
     html_code = f.read()
 
