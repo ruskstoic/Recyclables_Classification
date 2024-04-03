@@ -50,9 +50,29 @@ if cookies_user_id is None:
     cookies_user_id = str(uuid.uuid4())
     cookies["user_id"] = cookies_user_id
 
+## TEST 
 # Display the user ID
 st.write('User ID:', cookies_user_id)
 st.write("Current cookies:", cookies)
+
+# TEST IP Address
+# Load and embed the HTML file with JavaScript code
+with open('<insert path to html>', 'r') as f:
+    html_code = f.read()
+
+# Embed the HTML code in your Streamlit app
+st.markdown(html_code, unsafe_allow_html=False)
+with open("path/to/your/get_user_ip.html", "r") as f:
+    html_code = f.read()
+
+# Write IP Address
+def streamlit_endpoint():
+    if st.request.method = 'POST':
+        data = st.request.body
+        ip_address = json.loads(data)['ip']
+        st.write('User IP:', ip_address)
+
+streamlit_endpoint()
 
 # value = st.text_input("New value for a cookie")
 # if st.button("Change the cookie"):
