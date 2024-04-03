@@ -63,8 +63,8 @@ st.write("Current cookies:", cookies)
 app = Flask(__name__)
 CORS(app)
 
-# Display a text input field for the user's IP address
-user_ip = st.text_input("User IP Address", "")
+# # Display a text input field for the user's IP address
+# user_ip = st.text_input("User IP Address", "")
 
 # Define a route for handling POST requests
 @app.route('/update-ip', methods=['POST'])
@@ -82,7 +82,11 @@ import threading
 threading.Thread(target=app.run, kwargs={'port': 5000}).start()
 
 # Display a message in the Streamlit app
-st.write('Flask app is running. Use the /update-ip endpoint to send IP addresses.')
+st.write('Flask app is running.')
+
+if __name__ == '__main__':
+    app.run(debug=True)
+python app.py
 
 # If you receive an IP address from the Flask server, update the text input field
 if user_ip:
