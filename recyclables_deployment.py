@@ -65,6 +65,10 @@ st.write("Current cookies:", cookies)
 app = Flask(__name__)
 CORS(app)
 
+#Initialize session state
+if 'user_ip' not in st.session_state:
+    st.session_state.user_ip = None
+
 # # Display a text input field for the user's IP address
 user_ip = None
 user_ip = st.text_input("User IPA", "")
@@ -102,10 +106,7 @@ if __name__ == '__main__':
 st.write('Flask app is running.')
 
 # If you receive an IP address from the Flask server, update the text input field
-if user_ip:
-    user_ip_input.value = user_ip
-
-st.write(f'IPA is {user_ip}')
+st.write(f'User IP: {st.session_state.user_ip}')
 
 
 # # Embed the HTML code in your Streamlit app
