@@ -90,7 +90,7 @@ if __name__ == '__main__':
     server.join()  # Wait for the server to start
     
     port = server.ident.port
-    print(f"Flask app is running on port {port}")
+    st.write(f"Flask app is running on port {port}")
 
 
 # Display a message in the Streamlit app
