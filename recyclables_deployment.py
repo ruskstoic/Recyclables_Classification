@@ -81,7 +81,8 @@ def update_ip():
         return jsonify({'error': 'IP address not found in request'}), 400
 
 # Run the Flask app in a separate thread
-threading.Thread(target=app.run, kwargs={'port': 5002}).start()
+threading.Thread(target=app.run, kwargs={'port': 0}).start()
+port = app.port
 
 # Display a message in the Streamlit app
 st.write('Flask app is running.')
