@@ -73,6 +73,12 @@ if 'user_ip' not in st.session_state:
 user_ip = None
 user_ip = st.text_input("User IPA", "")
 
+@app.route('/get-port', methods=['GET'])
+def get_port():
+    return jsonify({'java_port': java_port})
+
+st.write(f"Flask app is running on port {java_port}")
+
 # Define a route for handling POST requests
 @app.route('/update-ip', methods=['POST'])
 def update_ip():
