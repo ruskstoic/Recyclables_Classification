@@ -91,7 +91,7 @@ def get_free_port():
     return port
 
 if __name__ == '__main__':
-    port = get.free_port()
+    port = get_free_port()
     server = threading.Thread(target=app.run, kwargs={'port': port})
     server.start()
 
