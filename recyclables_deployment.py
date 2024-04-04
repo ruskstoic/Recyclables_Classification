@@ -105,6 +105,8 @@ st.write('Flask app is running.')
 if user_ip:
     user_ip_input.value = user_ip
 
+st.write(f'IPA is {user_ip}')
+
 
 # # Embed the HTML code in your Streamlit app
 # with open("static/IPA.html", "r") as f:
