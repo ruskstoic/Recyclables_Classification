@@ -87,8 +87,8 @@ def update_ip():
 if __name__ == '__main__':
     server = threading.Thread(target=app.run, kwargs={'port': 0})
     server.start()
-    
-    port = server.ident.port
+    server.join
+    port = server.port
     st.write(f"Flask app is running on port {port}")
 
 
