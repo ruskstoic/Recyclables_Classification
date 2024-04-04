@@ -31,6 +31,7 @@ from streamlit_cookies_manager import EncryptedCookieManager
 from flask import Flask, request, jsonify
 import threading
 from flask_cors import CORS
+import socket
 
 
 ## Streamlit Tracker Start
@@ -81,14 +82,19 @@ def update_ip():
         return jsonify({'error': 'IP address not found in request'}), 400
 
 # Run the Flask app in a separate thread
-# threading.Thread(target=app.run, kwargs={'port': 0}).start()
-# port = app.port
+def get_free_port():
+    """Find an available port."""
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.bind(('localhost', 0))
+    port = s.getsockname()[1]
+    s.close()
+    return port
 
 if __name__ == '__main__':
-    server = threading.Thread(target=app.run, kwargs={'port': 0})
+    port = get.free_port()
+    server = threading.Thread(target=app.run, kwargs={'port': port})
     server.start()
 
-    port = server.port
     st.write(f"Flask app is running on port {port}")
 
 
