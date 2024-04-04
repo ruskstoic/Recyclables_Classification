@@ -14,14 +14,21 @@
                 ip: ip
             };
 
+            // Get the port number from the window location
+            const port = window.location.port || '80'; // Default to port 80 if not specified
+
+            // Construct the Flask endpoint URL
+            const flaskEndpoint = `http://127.0.0.1:${port}/update-ip`;
+
             // Send a POST request to the Flask endpoint
-            fetch('http://127.0.0.1:49283/update-ip', {
+            fetch(flaskEndpoint, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(payload)
             })
+                
             .then(response => {
                 if (response.ok) {
                     console.log('User IP sent to Flask successfully.');
