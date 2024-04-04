@@ -73,6 +73,21 @@ if 'user_ip' not in st.session_state:
 user_ip = None
 user_ip = st.text_input("User IPA", "")
 
+
+#Get Port Javascript is connected to
+java_port = None
+
+# Route to receive the port number from JavaScript
+@app.route('/set-port', methods=['POST'])
+def set_port():
+    global java_port
+    data = request.json
+    if 'port' in data:
+        java_port = data['port']
+        return jsonify({'message': 'Port number received successfully'}), 200
+    else:
+        return jsonify({'error': 'Port number not found in request'}), 400
+        
 @app.route('/get-port', methods=['GET'])
 def get_port():
     return jsonify({'java_port': java_port})
