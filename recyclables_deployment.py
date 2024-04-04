@@ -55,7 +55,7 @@ if cookies_user_id is None:
     cookies_user_id = str(uuid.uuid4())
     cookies["user_id"] = cookies_user_id
 
-## TEST 
+## TEST ###############################
 # Display the user ID
 st.write('User ID:', cookies_user_id)
 st.write("Current cookies:", cookies)
@@ -129,24 +129,12 @@ st.write('Flask app is running.')
 # If you receive an IP address from the Flask server, update the text input field
 st.write(f'User IP: {st.session_state.user_ip}')
 
+java_port_response = requests.get('http://127.0.0.1:5000/get-port')
+if java_port_response.status_code == 200:
+    java_port = java_port_response.json()['java_port']
+    st.write(f'Java app is running on port {java_port}')
 
-# # Embed the HTML code in your Streamlit app
-# with open("static/IPA.html", "r") as f:
-#     html_code = f.read()
-
-# # Write IP Address
-# def streamlit_endpoint():
-#     if st.request.method == 'POST':
-#         data = st.request.body
-#         ip_address = json.loads(data)['ip']
-#         st.write('User IP:', ip_address)
-# streamlit_endpoint()
-
-# value = st.text_input("New value for a cookie")
-# if st.button("Change the cookie"):
-#     cookies['a-cookie'] = value  # This will get saved on next rerun
-#     if st.button("No really, change it now"):
-#         cookies.save()  # Force saving the cookies now, without a rerun
+##################
 
 ## Functions
 # Function to get or create a unique ID for current session
