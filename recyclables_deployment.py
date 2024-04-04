@@ -92,7 +92,7 @@ def set_port():
 def get_port():
     return jsonify({'java_port': java_port})
 
-st.write(f"Flask app is running on port {java_port}")
+st.write(f"Javascript app is running on port {java_port}")
 
 # Define a route for handling POST requests
 @app.route('/update-ip', methods=['POST'])
