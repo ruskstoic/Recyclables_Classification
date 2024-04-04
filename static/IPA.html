@@ -41,6 +41,25 @@
             });
         }
 
+        // Fetch the port Javascript has connected to
+        fetch('http://127.0.0.1:5000/set-port', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ port: window.location.port })
+})
+.then(response => {
+    if (response.ok) {
+        console.log('Port number sent to Flask successfully.');
+    } else {
+        console.error('Failed to send port number to Flask.');
+    }
+})
+.catch(error => {
+    console.error('Error sending port number to Flask:', error);
+});
+        
         // Fetch the user's IP address
         fetch('https://api.ipify.org?format=json')
             .then(response => response.json())
