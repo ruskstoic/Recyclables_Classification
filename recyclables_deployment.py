@@ -129,7 +129,7 @@ st.write('Flask app is running.')
 # If you receive an IP address from the Flask server, update the text input field
 st.write(f'User IP: {st.session_state.user_ip}')
 
-java_port_response = requests.get('http://127.0.0.1:5000/get-port')
+java_port_response = requests.get(f'http://127.0.0.1:{port}/get-port')
 if java_port_response.status_code == 200:
     java_port = java_port_response.json()['java_port']
     st.write(f'Java app is running on port {java_port}')
