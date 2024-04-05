@@ -32,6 +32,7 @@ from flask import Flask, request, jsonify
 import threading
 from flask_cors import CORS
 import socket
+from deta import Deta
 
 
 ## Streamlit Tracker Start
@@ -56,85 +57,96 @@ if cookies_user_id is None:
     cookies["user_id"] = cookies_user_id
 
 ## TEST ###############################
-# Display the user ID
-st.write('User ID:', cookies_user_id)
-st.write("Current cookies:", cookies)
+# # TEST IPA
+# # Create a Flask app
+# app = Flask(__name__)
+# CORS(app)
 
-# TEST IP Address
-# Create a Flask app
-app = Flask(__name__)
-CORS(app)
+# #Initialize session state
+# if 'user_ip' not in st.session_state:
+#     st.session_state.user_ip = None
 
-#Initialize session state
-if 'user_ip' not in st.session_state:
-    st.session_state.user_ip = None
-
-# # Display a text input field for the user's IP address
-user_ip = None
-user_ip = st.text_input("User IPA", "")
+# # # Display a text input field for the user's IPA
+# user_ip = None
+# user_ip = st.text_input("User IPA", "")
 
 
-#Get Port Javascript is connected to
-java_port = None
+# #Get Port Javascript is connected to
+# java_port = None
 
-# Route to receive the port number from JavaScript
-@app.route('/set-port', methods=['POST'])
-def set_port():
-    global java_port
-    data = request.json
-    if 'port' in data:
-        java_port = data['port']
-        return jsonify({'message': 'Port number received successfully'}), 200
-    else:
-        return jsonify({'error': 'Port number not found in request'}), 400
+# # Route to receive the port number from JavaScript
+# @app.route('/set-port', methods=['POST'])
+# def set_port():
+#     global java_port
+#     data = request.json
+#     if 'port' in data:
+#         java_port = data['port']
+#         return jsonify({'message': 'Port number received successfully'}), 200
+#     else:
+#         return jsonify({'error': 'Port number not found in request'}), 400
         
-@app.route('/get-port', methods=['GET'])
-def get_port():
-    return jsonify({'java_port': java_port})
+# @app.route('/get-port', methods=['GET'])
+# def get_port():
+#     return jsonify({'java_port': java_port})
 
-st.write(f"Javascript app is running on port {java_port}")
+# st.write(f"Javascript app is running on port {java_port}")
 
-# Define a route for handling POST requests
-@app.route('/update-ip', methods=['POST'])
-def update_ip():
-    data = request.json
-    if 'ip' in data:
-        ip_address = data['ip']
-        user_ip = ip_address
-        st.write('User IP:', ip_address)
-        return jsonify({'message': 'User IP received successfully'}), 200
-    else:
-        return jsonify({'error': 'IP address not found in request'}), 400
+# # Define a route for handling POST requests
+# @app.route('/update-ip', methods=['POST'])
+# def update_ip():
+#     data = request.json
+#     if 'ip' in data:
+#         ipa = data['ip']
+#         user_ip = ipa
+#         st.write('User IP:', ipa)
+#         return jsonify({'message': 'IPA received successfully'}), 200
+#     else:
+#         return jsonify({'error': 'IPA not found in request'}), 400
 
-# Run the Flask app in a separate thread
-def get_free_port():
-    """Find an available port."""
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind(('localhost', 0))
-    port = s.getsockname()[1]
-    s.close()
-    return port
+# # Run the Flask app in a separate thread
+# def get_free_port():
+#     """Find an available port."""
+#     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#     s.bind(('localhost', 0))
+#     port = s.getsockname()[1]
+#     s.close()
+#     return port
 
-if __name__ == '__main__':
-    port = get_free_port()
-    server = threading.Thread(target=app.run, kwargs={'port': port})
-    server.start()
+# if __name__ == '__main__':
+#     port = get_free_port()
+#     server = threading.Thread(target=app.run, kwargs={'port': port})
+#     server.start()
 
-    st.write(f"Flask app is running on port {port}")
+#     st.write(f"Flask app is running on port {port}")
 
 
-# Display a message in the Streamlit app
-st.write('Flask app is running.')
+# # Display a message in the Streamlit app
+# st.write('Flask app is running.')
 
-# If you receive an IP address from the Flask server, update the text input field
-st.write(f'User IP: {st.session_state.user_ip}')
+# # If you receive an IP address from the Flask server, update the text input field
+# st.write(f'User IP: {st.session_state.user_ip}')
 
-java_port_response = requests.get(f'http://127.0.0.1:{port}/get-port')
-if java_port_response.status_code == 200:
-    java_port = java_port_response.json()['java_port']
-    st.write(f'Java app is running on port {java_port}')
+# java_port_response = requests.get(f'http://127.0.0.1:{port}/get-port')
+# if java_port_response.status_code == 200:
+#     java_port = java_port_response.json()['java_port']
+#     st.write(f'Java app is running on port {java_port}')
 
 ##################
+
+##TEST DETA Drive
+
+# DETA_key = os.environ.get()
+# deta = Deta(DETA_key)
+# drive = deta.Drive('insert_drive_name')
+# st.set_option('deprecation.showfileUploaderEncoding', False) # Enabling the automatic file decoder
+
+#Put at bottom of code
+# uploaded_img = st.file_uploader("Choose photos to upload", accept_multiple_files=True, type=['png', 'jpeg', 'jpg'])
+# name = f'{confidence}%{likely_class}_{user_info}'
+# path ='./' + name # Creating path string which is basically ["./image.jpg"]
+# drive.put(name, path=path) # so, we have our file name and path, so uploading images to the drive
+# os.remove(name) # Finally deleting it from root folder
+
 
 ## Functions
 # Function to get or create a unique ID for current session
@@ -211,7 +223,8 @@ if user_name:
     st.write('Data appended successfully!')
     
     #Merge and display user info
-    user_info = f'Name: {user_name} | User ID: {user_id} | Date Entered: {formatted_datetime_entered} | Tab ID: {tab_id}'
+    user_info_headers = f'Name: {user_name} | User ID: {user_id} | Date Entered: {formatted_datetime_entered} | Tab ID: {tab_id}'
+    user_info = f'{user_name}_{user_id}_{formatted_datetime_entered}_{tab_id}'
     st.subheader('User Information')
     st.write(log_entry_df + '\n')
     
@@ -261,10 +274,15 @@ if user_name:
                     # Make predictions
                     predictions = model.predict(img)
                     class_names = ['Glass', 'Metal', 'Paper', 'Plastic']
+                    confidence = np.max(predictions) * 100:.2f
+                    likely_class = class_names[np.argmax(predictions)]
     
                     st.write('Prediction:')
-                    st.write(f'Class: {class_names[np.argmax(predictions)]}')
-                    st.write(f'Confidence: {np.max(predictions) * 100:.2f}%')
+                    st.write(f'Class: {likely_class}')
+                    st.write(f'Confidence: {confidence}%')
+
+                    # Save Img and Result to Deta Drive
+                
                 else:
                     st.write('Failed to download the model file from GitHub.')
 
