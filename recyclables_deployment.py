@@ -191,6 +191,9 @@ Please note that it's a beginner model, and while it shows promising results, it
 user_name = st.text_input('Hi! What is your name?')
 
 if user_name:
+    #Say Hi
+    st.write(f'Hello {user_name}!')
+    
     #Get or create a unique user ID for current session
     user_id = cookies["user_id"]
 
@@ -211,29 +214,29 @@ if user_name:
     plastic_percent = st.session_state.get('plastic_percent', 'NIL')
 
     #Logging user information
-    user_log_filename = 'user_log.txt'
-    log_entry_df = log_user_info(user_name=user_name, user_id=user_id, formatted_datetime_entered=formatted_datetime_entered, tab_id=tab_id,
-                                 img=img, glass_percent=glass_percent, metal_percent=metal_percent, paper_percent=paper_percent, plastic_percent=plastic_percent)
-    st.write(log_entry_df)
-
-    #Create Google Sheet Connection Object
-    conn = st.connection('gsheets', type=GSheetsConnection)
+    if img is not None and glass_percent is not None and metal_percent is not None and paper_percent is not None and plastic_percent is not None:
+        user_log_filename = 'user_log.txt'
+        log_entry_df = log_user_info(user_name=user_name, user_id=user_id, formatted_datetime_entered=formatted_datetime_entered, tab_id=tab_id,
+                                     img=img, glass_percent=glass_percent, metal_percent=metal_percent, paper_percent=paper_percent, plastic_percent=plastic_percent)
+        st.write(log_entry_df)
     
-    # Read existing data from the worksheet
-    existing_data = conn.read(worksheet='Sheet1', usecols=[0,1,2,3,4,5,6,7,8], end='A')
-    
-    # Convert the existing data to a DataFrame (assuming it's already in tabular format)
-    existing_df = pd.DataFrame(existing_data, columns=['Name', 'User_ID', 'Datetime_Entered', 'Tab_ID', 'Image', 'Glass %', 'Metal %', 'Paper %', 'Plastic %'])
-    
-    # Concatenate the existing DataFrame with the new entry DataFrame
-    combined_df = pd.concat([existing_df, log_entry_df], ignore_index=True)
-    
-    # Write the combined DataFrame back to the worksheet
-    conn.update(worksheet='Sheet1', data=combined_df)
-    
-    # Clear cache and display success message
-    st.cache_data.clear()
-    st.write(f'Hello {user_name}!')
+        #Create Google Sheet Connection Object
+        conn = st.connection('gsheets', type=GSheetsConnection)
+        
+        # Read existing data from the worksheet
+        existing_data = conn.read(worksheet='Sheet1', usecols=[0,1,2,3,4,5,6,7,8], end='A')
+        
+        # Convert the existing data to a DataFrame (assuming it's already in tabular format)
+        existing_df = pd.DataFrame(existing_data, columns=['Name', 'User_ID', 'Datetime_Entered', 'Tab_ID', 'Image', 'Glass %', 'Metal %', 'Paper %', 'Plastic %'])
+        
+        # Concatenate the existing DataFrame with the new entry DataFrame
+        combined_df = pd.concat([existing_df, log_entry_df], ignore_index=True)
+        
+        # Write the combined DataFrame back to the worksheet
+        conn.update(worksheet='Sheet1', data=combined_df)
+        
+        # Clear cache and display success message
+        st.cache_data.clear()
     
     #Merge and display user info
     user_info_headers = f'Name: {user_name} | User ID: {user_id} | Date Entered: {formatted_datetime_entered} | Tab ID: {tab_id}'
