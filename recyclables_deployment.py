@@ -212,6 +212,7 @@ if user_name:
     metal_percent = st.session_state.get('metal_percent', 'NIL')
     paper_percent = st.session_state.get('paper_percent', 'NIL')
     plastic_percent = st.session_state.get('plastic_percent', 'NIL')
+    st.write(img, glass_percent, metal_percent, paper_percent, paper_percent)
 
     #Logging user information
     if img != 'NIL' and glass_percent != 'NIL' and metal_percent != 'NIL' and paper_percent != 'NIL' and plastic_percent != 'NIL':
