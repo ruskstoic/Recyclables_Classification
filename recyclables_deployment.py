@@ -203,10 +203,14 @@ if user_name:
     converted_datetime_entered = datetime.now(converted_timezone)
     formatted_datetime_entered = converted_datetime_entered.strftime(datetime_format)
 
+    #Set Material Percents to None
+    if uploaded_image is None:
+        img, glass_percent, metal_percent, paper_percent, plastic_percent = None, None, None, None, None
+
     #Logging user information
     user_log_filename = 'user_log.txt'
     log_entry_df = log_user_info(user_name=user_name, user_id=user_id, formatted_datetime_entered=formatted_datetime_entered, tab_id=tab_id,
-                                 img=None, glass_percent=None, metal_percent=None, paper_percent=None, plastic_percent=None)
+                                 img=img, glass_percent=glass_percent, metal_percent=metal_percent, paper_percent=paper_percent, plastic_percent=plastic_percent)
 
     #Create Google Sheet Connection Object
     conn = st.connection('gsheets', type=GSheetsConnection)
@@ -286,11 +290,10 @@ if user_name:
 
                     # Save Img and Material Confidence Intervals to Google Sheet
                     glass_percent, metal_percent, paper_percent, plastic_percent = predictions[0][0], predictions[0][1], predictions[0][2], predictions[0][3] 
-                    encoded_file = base64.b64encode(uploaded_image.read()).decode('utf-8')
 
                     #Create dictionary of all user info
                     log_entry_df = log_user_info(user_name=user_name, user_id=user_id, formatted_datetime_entered=formatted_datetime_entered, tab_id=tab_id,
-                                 img=encoded_file, glass_percent=glass_percent, metal_percent=metal_percent, paper_percent=paper_percent, plastic_percent=plastic_percent)
+                                 img=img, glass_percent=glass_percent, metal_percent=metal_percent, paper_percent=paper_percent, plastic_percent=plastic_percent)
                     #Create Google Sheet Connection Object
                     conn = st.connection('gsheets', type=GSheetsConnection)
                     # Read existing data from the worksheet
