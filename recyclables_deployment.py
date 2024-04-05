@@ -204,8 +204,7 @@ if user_name:
     formatted_datetime_entered = converted_datetime_entered.strftime(datetime_format)
 
     #Set Material Percents to None
-    if uploaded_image is None:
-        img, glass_percent, metal_percent, paper_percent, plastic_percent = None, None, None, None, None
+    img, glass_percent, metal_percent, paper_percent, plastic_percent = None, None, None, None, None
 
     #Logging user information
     user_log_filename = 'user_log.txt'
