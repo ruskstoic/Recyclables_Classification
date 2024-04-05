@@ -214,6 +214,7 @@ if user_name:
     user_log_filename = 'user_log.txt'
     log_entry_df = log_user_info(user_name=user_name, user_id=user_id, formatted_datetime_entered=formatted_datetime_entered, tab_id=tab_id,
                                  img=img, glass_percent=glass_percent, metal_percent=metal_percent, paper_percent=paper_percent, plastic_percent=plastic_percent)
+    st.write(log_entry_df)
 
     #Create Google Sheet Connection Object
     conn = st.connection('gsheets', type=GSheetsConnection)
@@ -239,6 +240,7 @@ if user_name:
     user_info = f'{user_name}_{user_id}_{formatted_datetime_entered}_{tab_id}'
     
     uploaded_image = st.file_uploader("Upload your image...", type=['jpeg','jpg','png'])
+    st.write(log_entry_df)
     
     if uploaded_image is not None:
         st.image(uploaded_image, caption='Uploaded Image', use_column_width=True)
@@ -293,6 +295,7 @@ if user_name:
                 else:
                     st.write('Failed to download the model file from GitHub.')
 
+                st.write(log_entry_df)
                 # Save Img and Material Confidence Intervals to Google Sheet
                 glass_percent, metal_percent, paper_percent, plastic_percent = predictions[0][0], predictions[0][1], predictions[0][2], predictions[0][3] 
     
@@ -309,6 +312,7 @@ if user_name:
                 combined_df = pd.concat([existing_df, log_entry_df], ignore_index=True)
                 # Write the combined DataFrame back to the worksheet
                 conn.update(worksheet='Sheet1', data=combined_df)
+                st.write(log_entry_df)
 
 #Streamlit Tracker End
 streamlit_analytics.stop_tracking(unsafe_password="test123")
