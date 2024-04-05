@@ -295,26 +295,26 @@ if user_name:
                 else:
                     st.write('Failed to download the model file from GitHub.')
 
-                    if img is not None and glass_percent is not None and metal_percent is not None and paper_percent is not None and plastic_percent is not None:
-                        st.write(log_entry_df)
-                        # Save Img and Material Confidence Intervals to Google Sheet
-                        glass_percent, metal_percent, paper_percent, plastic_percent = predictions[0][0], predictions[0][1], predictions[0][2], predictions[0][3] 
-            
-                        #Create dictionary of all user info
-                        log_entry_df_predictions = log_user_info(user_name=user_name, user_id=user_id, formatted_datetime_entered=formatted_datetime_entered, tab_id=tab_id,
-                                     img=img, glass_percent=glass_percent, metal_percent=metal_percent, paper_percent=paper_percent, plastic_percent=plastic_percent)
-                        #Create Google Sheet Connection Object
-                        conn = st.connection('gsheets', type=GSheetsConnection)
-                        # Read existing data from the worksheet
-                        existing_data = conn.read(worksheet='Sheet1', usecols=[0,1,2,3,4,5,6,7,8], end='A')
-                        # Convert the existing data to a DataFrame (assuming it's already in tabular format)
-                        existing_df = pd.DataFrame(existing_data, columns=['Name', 'User_ID', 'Datetime_Entered', 'Tab_ID', 'Image', 'Glass %', 'Metal %', 'Paper %', 'Plastic %'])
-                        # Concatenate the existing DataFrame with the new entry DataFrame
-                        combined_df = pd.concat([existing_df, log_entry_df_predictions], ignore_index=True)
-                        # Write the combined DataFrame back to the worksheet
-                        conn.update(worksheet='Sheet1', data=combined_df)
-                        # Clear cache and display success message
-                        st.cache_data.clear()
+                if img is not None and glass_percent is not None and metal_percent is not None and paper_percent is not None and plastic_percent is not None:
+                    st.write(log_entry_df)
+                    # Save Img and Material Confidence Intervals to Google Sheet
+                    glass_percent, metal_percent, paper_percent, plastic_percent = predictions[0][0], predictions[0][1], predictions[0][2], predictions[0][3] 
+        
+                    #Create dictionary of all user info
+                    log_entry_df_predictions = log_user_info(user_name=user_name, user_id=user_id, formatted_datetime_entered=formatted_datetime_entered, tab_id=tab_id,
+                                 img=img, glass_percent=glass_percent, metal_percent=metal_percent, paper_percent=paper_percent, plastic_percent=plastic_percent)
+                    #Create Google Sheet Connection Object
+                    conn = st.connection('gsheets', type=GSheetsConnection)
+                    # Read existing data from the worksheet
+                    existing_data = conn.read(worksheet='Sheet1', usecols=[0,1,2,3,4,5,6,7,8], end='A')
+                    # Convert the existing data to a DataFrame (assuming it's already in tabular format)
+                    existing_df = pd.DataFrame(existing_data, columns=['Name', 'User_ID', 'Datetime_Entered', 'Tab_ID', 'Image', 'Glass %', 'Metal %', 'Paper %', 'Plastic %'])
+                    # Concatenate the existing DataFrame with the new entry DataFrame
+                    combined_df = pd.concat([existing_df, log_entry_df_predictions], ignore_index=True)
+                    # Write the combined DataFrame back to the worksheet
+                    conn.update(worksheet='Sheet1', data=combined_df)
+                    # Clear cache and display success message
+                    st.cache_data.clear()
 
 #Streamlit Tracker End
 streamlit_analytics.stop_tracking(unsafe_password="test123")
