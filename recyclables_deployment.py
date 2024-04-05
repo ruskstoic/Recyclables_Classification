@@ -279,29 +279,28 @@ if user_name:
                     class_names = ['Glass', 'Metal', 'Paper', 'Plastic']
                     confidence = format(np.max(predictions) * 100, ".2f")
                     likely_class = class_names[np.argmax(predictions)]
-                    predictions = predictions*100
-                    glass_percent, metal_percent, paper_percent, plastic_percent = predictions[0][0], predictions[0][1], predictions[0][2], predictions[0][3] 
     
                     st.write('Prediction:')
                     st.write(f'Class: {likely_class}')
                     st.write(f'Confidence: {confidence}%')
 
-                    # Save Img and Result to Deta Drive
+                    # Save Img and Material Confidence Intervals to Google Sheet
+                    glass_percent, metal_percent, paper_percent, plastic_percent = predictions[0][0], predictions[0][1], predictions[0][2], predictions[0][3] 
+                    with open(uploaded_image, "rb") as img_file:
+                        img_data = img_file.read()
+                    img_base64 = base64.b64encode(img_data).decode("utf-8") 
+
+                    #Create dictionary of all user info
                     log_entry_df = log_user_info(user_name=user_name, user_id=user_id, formatted_datetime_entered=formatted_datetime_entered, tab_id=tab_id,
-                                 img=uploaded_image, glass_percent=glass_percent, metal_percent=metal_percent, paper_percent=paper_percent, plastic_percent=plastic_percent)
-                    
+                                 img=img_base64, glass_percent=glass_percent, metal_percent=metal_percent, paper_percent=paper_percent, plastic_percent=plastic_percent)
                     #Create Google Sheet Connection Object
                     conn = st.connection('gsheets', type=GSheetsConnection)
-                    
                     # Read existing data from the worksheet
                     existing_data = conn.read(worksheet='Sheet1', usecols=[0,1,2,3,4,5,6,7,8], end='A')
-                    
                     # Convert the existing data to a DataFrame (assuming it's already in tabular format)
                     existing_df = pd.DataFrame(existing_data, columns=['Name', 'User_ID', 'Datetime_Entered', 'Tab_ID', 'Image', 'Glass %', 'Metal %', 'Paper %', 'Plastic %'])
-                    
                     # Concatenate the existing DataFrame with the new entry DataFrame
                     combined_df = pd.concat([existing_df, log_entry_df], ignore_index=True)
-                    
                     # Write the combined DataFrame back to the worksheet
                     conn.update(worksheet='Sheet1', data=combined_df)
 
