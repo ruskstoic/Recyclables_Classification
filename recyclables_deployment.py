@@ -172,10 +172,10 @@ def log_user_info(user_name, user_id, formatted_datetime_entered, tab_id):
         'Datetime_Entered': formatted_datetime_entered,
         'Tab_ID': tab_id,
         'Image': img,
-        'Glass %': glass_%,
-        'Metal %': metal_%,
-        'Paper %': paper_%,
-        'Plastic %': plastic_%
+        'Glass %': glass_percent,
+        'Metal %': metal_percent,
+        'Paper %': paper_percent,
+        'Plastic %': plastic_percent
     }
     #Convert the dictionary to a DataFrame
     log_entry_df = pd.DataFrame([user_info])
