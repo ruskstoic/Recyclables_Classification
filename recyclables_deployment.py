@@ -279,7 +279,7 @@ if user_name:
                     class_names = ['Glass', 'Metal', 'Paper', 'Plastic']
                     confidence = format(np.max(predictions) * 100, ".2f")
                     likely_class = class_names[np.argmax(predictions)]
-                    glass_percent, metal_percent, paper_percent, plastic_percent = predictions[0], predictions[1], predictions[2], predictions[3], 
+                    glass_percent, metal_percent, paper_percent, plastic_percent = predictions[0][0], predictions[0][1], predictions[0][2], predictions[0][3] 
     
                     st.write('Prediction:')
                     st.write(f'Class: {likely_class}')
