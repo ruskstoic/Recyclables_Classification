@@ -279,6 +279,7 @@ if user_name:
                     class_names = ['Glass', 'Metal', 'Paper', 'Plastic']
                     confidence = format(np.max(predictions) * 100, ".2f")
                     likely_class = class_names[np.argmax(predictions)]
+                    predictions = predictions*100
                     glass_percent, metal_percent, paper_percent, plastic_percent = predictions[0][0], predictions[0][1], predictions[0][2], predictions[0][3] 
     
                     st.write('Prediction:')
@@ -287,7 +288,7 @@ if user_name:
 
                     # Save Img and Result to Deta Drive
                     log_entry_df = log_user_info(user_name=user_name, user_id=user_id, formatted_datetime_entered=formatted_datetime_entered, tab_id=tab_id,
-                                 img=img, glass_percent=glass_percent, metal_percent=metal_percent, paper_percent=paper_percent, plastic_percent=plastic_percent)
+                                 img=uploaded_image, glass_percent=glass_percent, metal_percent=metal_percent, paper_percent=paper_percent, plastic_percent=plastic_percent)
                     
                     #Create Google Sheet Connection Object
                     conn = st.connection('gsheets', type=GSheetsConnection)
