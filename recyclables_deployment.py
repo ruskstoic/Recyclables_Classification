@@ -214,7 +214,7 @@ if user_name:
     plastic_percent = st.session_state.get('plastic_percent', 'NIL')
 
     #Logging user information
-    if if img != 'NIL' and glass_percent != 'NIL' and metal_percent != 'NIL' and paper_percent != 'NIL' and plastic_percent != 'NIL':
+    if img != 'NIL' and glass_percent != 'NIL' and metal_percent != 'NIL' and paper_percent != 'NIL' and plastic_percent != 'NIL':
         user_log_filename = 'user_log.txt'
         log_entry_df = log_user_info(user_name=user_name, user_id=user_id, formatted_datetime_entered=formatted_datetime_entered, tab_id=tab_id,
                                      img=img, glass_percent=glass_percent, metal_percent=metal_percent, paper_percent=paper_percent, plastic_percent=plastic_percent)
