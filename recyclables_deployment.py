@@ -170,7 +170,12 @@ def log_user_info(user_name, user_id, formatted_datetime_entered, tab_id):
         'Name': user_name,
         'User_ID': user_id,
         'Datetime_Entered': formatted_datetime_entered,
-        'Tab_ID': tab_id
+        'Tab_ID': tab_id,
+        'Image': img,
+        'Glass %':, glass_%,
+        'Metal %':, metal_%,
+        'Paper %':, paper_%,
+        'Plastic %':, plastic_%,
     }
     #Convert the dictionary to a DataFrame
     log_entry_df = pd.DataFrame([user_info])
@@ -213,7 +218,6 @@ if user_name:
     
     # Concatenate the existing DataFrame with the new entry DataFrame
     combined_df = pd.concat([existing_df, log_entry_df], ignore_index=True)
-    # st.write('combined_df', combined_df)
     
     # Write the combined DataFrame back to the worksheet
     conn.update(worksheet='Sheet1', data=combined_df)
@@ -280,6 +284,9 @@ if user_name:
                     st.write(f'Confidence: {confidence}%')
 
                     # Save Img and Result to Deta Drive
+                    log_entry_df_with_img = 
+                    combined_df = pd.concat([combined_df, log_entry_df], ignore_index=True)
+                    user_data = 
                 
                 else:
                     st.write('Failed to download the model file from GitHub.')
