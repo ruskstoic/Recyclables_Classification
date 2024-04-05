@@ -215,10 +215,10 @@ if user_name:
     conn = st.connection('gsheets', type=GSheetsConnection)
     
     # Read existing data from the worksheet
-    existing_data = conn.read(worksheet='Sheet1', usecols=[0,1,2,3], end='A')
+    existing_data = conn.read(worksheet='Sheet1', usecols=[0,1,2,3,4,5,6,7,8], end='A')
     
     # Convert the existing data to a DataFrame (assuming it's already in tabular format)
-    existing_df = pd.DataFrame(existing_data, columns=['Name', 'User_ID', 'Datetime_Entered', 'Tab_ID'])
+    existing_df = pd.DataFrame(existing_data, columns=['Name', 'User_ID', 'Datetime_Entered', 'Tab_ID', 'Image', 'Glass %', 'Metal %', 'Paper %', 'Plastic %'])
     
     # Concatenate the existing DataFrame with the new entry DataFrame
     combined_df = pd.concat([existing_df, log_entry_df], ignore_index=True)
