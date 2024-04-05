@@ -300,7 +300,7 @@ if user_name:
                 glass_percent, metal_percent, paper_percent, plastic_percent = predictions[0][0], predictions[0][1], predictions[0][2], predictions[0][3] 
     
                 #Create dictionary of all user info
-                log_entry_df = log_user_info(user_name=user_name, user_id=user_id, formatted_datetime_entered=formatted_datetime_entered, tab_id=tab_id,
+                log_entry_df_predictions = log_user_info(user_name=user_name, user_id=user_id, formatted_datetime_entered=formatted_datetime_entered, tab_id=tab_id,
                              img=img, glass_percent=glass_percent, metal_percent=metal_percent, paper_percent=paper_percent, plastic_percent=plastic_percent)
                 #Create Google Sheet Connection Object
                 conn = st.connection('gsheets', type=GSheetsConnection)
@@ -309,10 +309,11 @@ if user_name:
                 # Convert the existing data to a DataFrame (assuming it's already in tabular format)
                 existing_df = pd.DataFrame(existing_data, columns=['Name', 'User_ID', 'Datetime_Entered', 'Tab_ID', 'Image', 'Glass %', 'Metal %', 'Paper %', 'Plastic %'])
                 # Concatenate the existing DataFrame with the new entry DataFrame
-                combined_df = pd.concat([existing_df, log_entry_df], ignore_index=True)
+                combined_df = pd.concat([existing_df, log_entry_df_predictions], ignore_index=True)
                 # Write the combined DataFrame back to the worksheet
                 conn.update(worksheet='Sheet1', data=combined_df)
-                st.write(log_entry_df)
+                # Clear cache and display success message
+                st.cache_data.clear()
 
 #Streamlit Tracker End
 streamlit_analytics.stop_tracking(unsafe_password="test123")
