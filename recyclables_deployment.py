@@ -286,13 +286,11 @@ if user_name:
 
                     # Save Img and Material Confidence Intervals to Google Sheet
                     glass_percent, metal_percent, paper_percent, plastic_percent = predictions[0][0], predictions[0][1], predictions[0][2], predictions[0][3] 
-                    with open("uploaded_image.png", "rb") as img_file:
-                        img_data = img_file.read()
-                    img_base64 = base64.b64encode(img_data).decode("utf-8") 
+                    encoded_file = base64.b64encode(uploaded_image.read()).decode('utf-8')
 
                     #Create dictionary of all user info
                     log_entry_df = log_user_info(user_name=user_name, user_id=user_id, formatted_datetime_entered=formatted_datetime_entered, tab_id=tab_id,
-                                 img=img_base64, glass_percent=glass_percent, metal_percent=metal_percent, paper_percent=paper_percent, plastic_percent=plastic_percent)
+                                 img=encoded_file, glass_percent=glass_percent, metal_percent=metal_percent, paper_percent=paper_percent, plastic_percent=plastic_percent)
                     #Create Google Sheet Connection Object
                     conn = st.connection('gsheets', type=GSheetsConnection)
                     # Read existing data from the worksheet
