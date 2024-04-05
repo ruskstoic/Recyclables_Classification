@@ -205,7 +205,8 @@ if user_name:
 
     #Logging user information
     user_log_filename = 'user_log.txt'
-    log_entry_df = log_user_info(user_name=user_name, user_id=user_id, formatted_datetime_entered=formatted_datetime_entered, tab_id=tab_id)
+    log_entry_df = log_user_info(user_name=user_name, user_id=user_id, formatted_datetime_entered=formatted_datetime_entered, tab_id=tab_id,
+                                 img=None, glass_percent=None, metal_percent=None, paper_percent=None, plastic_percent=None)
 
     #Create Google Sheet Connection Object
     conn = st.connection('gsheets', type=GSheetsConnection)
