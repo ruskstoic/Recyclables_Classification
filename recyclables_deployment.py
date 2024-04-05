@@ -185,10 +185,11 @@ def log_user_info(user_name, user_id, formatted_datetime_entered, tab_id, img, g
 st.title('Can We Predict Which Recyclable Category Your Trash is Under?')
 st.subheader("Model Disclaimer: Work in Progress 🚧\n\nOur model is in its early stages and is continuously undergoing training and improvements. \
 Please note that it's a beginner model, and while it shows promising results, it is not perfect. We appreciate your understanding as we strive to enhance its performance over time.")
-
+user_name = st.text_input('Hi! What is your name?')
 
 ## Prompt user to enter their name
 if user_name:
+    
     #Say Hi
     st.write(f'Hello {user_name}!')
     
