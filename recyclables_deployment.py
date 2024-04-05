@@ -220,13 +220,11 @@ if user_name:
     
     # Clear cache and display success message
     st.cache_data.clear()
-    st.write('Data appended successfully!')
+    st.write(f'Hello {user_name}!')
     
     #Merge and display user info
     user_info_headers = f'Name: {user_name} | User ID: {user_id} | Date Entered: {formatted_datetime_entered} | Tab ID: {tab_id}'
     user_info = f'{user_name}_{user_id}_{formatted_datetime_entered}_{tab_id}'
-    st.subheader('User Information')
-    st.write(log_entry_df + '\n')
     
     uploaded_image = st.file_uploader("Upload your image...", type=['jpeg','jpg','png'])
     
