@@ -274,7 +274,7 @@ if user_name:
                     # Make predictions
                     predictions = model.predict(img)
                     class_names = ['Glass', 'Metal', 'Paper', 'Plastic']
-                    confidence = np.max(predictions) * 100:.2f
+                    confidence = format(np.max(predictions) * 100, ".2f")
                     likely_class = class_names[np.argmax(predictions)]
     
                     st.write('Prediction:')
