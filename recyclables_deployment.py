@@ -284,9 +284,9 @@ if user_name:
                     st.write(f'Confidence: {confidence}%')
 
                     # Save Img and Result to Deta Drive
-                    log_entry_df_with_img = 
-                    combined_df = pd.concat([combined_df, log_entry_df], ignore_index=True)
-                    user_data = 
+                    # log_entry_df_with_img = 
+                    # combined_df = pd.concat([combined_df, log_entry_df], ignore_index=True)
+                    # user_data = 
                 
                 else:
                     st.write('Failed to download the model file from GitHub.')
