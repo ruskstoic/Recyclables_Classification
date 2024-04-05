@@ -204,11 +204,11 @@ if user_name:
     formatted_datetime_entered = converted_datetime_entered.strftime(datetime_format)
 
     # Get the previous values of img and material percentages from session state
-    img = st.session_state.get('img', None)
-    glass_percent = st.session_state.get('glass_percent', None)
-    metal_percent = st.session_state.get('metal_percent', None)
-    paper_percent = st.session_state.get('paper_percent', None)
-    plastic_percent = st.session_state.get('plastic_percent', None)
+    img = st.session_state.get('img', 'NIL')
+    glass_percent = st.session_state.get('glass_percent', 'NIL')
+    metal_percent = st.session_state.get('metal_percent', 'NIL')
+    paper_percent = st.session_state.get('paper_percent', 'NIL')
+    plastic_percent = st.session_state.get('plastic_percent', 'NIL')
 
     #Logging user information
     user_log_filename = 'user_log.txt'
