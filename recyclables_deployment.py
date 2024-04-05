@@ -164,7 +164,7 @@ def get_or_create_tab_ID():
     return st.session_state.tab_id
 
 # Function to log user info
-def log_user_info(user_name, user_id, formatted_datetime_entered, tab_id):
+def log_user_info(user_name, user_id, formatted_datetime_entered, tab_id, img, glass_percent, metal_percent, paper_percent, plastic_percent):
     #Create a dictionary
     user_info = {
         'Name': user_name,
