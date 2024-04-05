@@ -33,7 +33,7 @@ import threading
 from flask_cors import CORS
 import socket
 from deta import Deta
-
+import base64
 
 ## Streamlit Tracker Start
 streamlit_analytics.start_tracking()
@@ -286,7 +286,7 @@ if user_name:
 
                     # Save Img and Material Confidence Intervals to Google Sheet
                     glass_percent, metal_percent, paper_percent, plastic_percent = predictions[0][0], predictions[0][1], predictions[0][2], predictions[0][3] 
-                    with open(uploaded_image, "rb") as img_file:
+                    with open("uploaded_image.png", "rb") as img_file:
                         img_data = img_file.read()
                     img_base64 = base64.b64encode(img_data).decode("utf-8") 
 
