@@ -200,17 +200,17 @@ SCOPES = ['https://www.googleapis.com/auth/drive',
 ]
 
 # Function to authenticate with Google Drive API
-def authenticate():
-    gdrive_auth_secret = os.environ.get('GDRIVE_AUTHENTICATION_CREDENTIALS')
-    st.write(gdrive_auth_secret)
-    credentials_dict = json.loads(gdrive_auth_secret)
-    st.write(credentials_dict)
-    creds = service_account.Credentials.from_service_account_file(credentials_dict, scopes=SCOPES)
-    return creds
+# def authenticate():
+gdrive_auth_secret = os.environ.get('GDRIVE_AUTHENTICATION_CREDENTIALS')
+st.write(gdrive_auth_secret)
+credentials_dict = json.loads(gdrive_auth_secret)
+st.write(credentials_dict)
+creds = service_account.Credentials.from_service_account_file(credentials_dict, scopes=SCOPES)
+    # return creds
 
 # Authenticate with Google Drive API
-credentials = authenticate()
-service = build('drive', 'v3', credentials=credentials)
+# credentials = authenticate()
+# service = build('drive', 'v3', credentials=credentials)
 
 ## Streamlit Interface
 st.title('Can We Predict Which Recyclable Category Your Trash is Under?')
