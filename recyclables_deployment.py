@@ -292,7 +292,7 @@ if user_name:
                     file_details = {'FileName': uploaded_image.name, 'FileType': uploaded_image.type}
                     st.write(file_details)
                     array_img = np.array(img) / 255.0
-                    array_img = np.expand_dims(img, axis=0)
+                    array_img = np.expand_dims(array_img, axis=0)
     
                     # Make predictions
                     predictions = model.predict(array_img)
