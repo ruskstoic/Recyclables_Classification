@@ -206,8 +206,8 @@ SCOPES = ['https://www.googleapis.com/auth/drive',
 # gdrive_auth_secret = os.environ.get('GDRIVE_AUTHENTICATION_CREDENTIALS')
 gdrive_auth_secret = os.getenv("GDRIVE_AUTHENTICATION_CREDENTIALS")
 st.write('gdrive_auth_secret', gdrive_auth_secret)
-# credentials_dict = json.loads(gdrive_auth_secret)
-# st.write(credentials_dict)
+credentials_dict = json.loads(gdrive_auth_secret)
+st.write(credentials_dict)
 # creds = service_account.Credentials.from_service_account_file(credentials_dict, scopes=SCOPES)
     # return creds
 
