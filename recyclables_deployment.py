@@ -333,7 +333,7 @@ if user_name:
                     }
                     # Save the image to a temporary file
                     with tempfile.NamedTemporaryFile(delete=False) as temp_file:
-                        img.save(temp_file.name)
+                        img.save(temp_file.name, format='JPEG')
                     media = MediaFileUpload(temp_file.name, mimetype='image/jpeg')  # Adjust mimetype as per your file type
                     file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
                     st.success(f'Image uploaded successfully! File ID: {file.get("id")}')
