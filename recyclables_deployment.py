@@ -56,7 +56,7 @@ cookies = EncryptedCookieManager(
 )
 if not cookies.ready(): # Wait for the component to load and send us current cookies.
     st.stop()
-st.write('cookies manager', password)
+st.write('cookies manager', os.environ.get("STREAMLIT_COOKIES_MANAGER_PASSWORD"))
 
 # Retrieve the user_id from the cookies
 cookies_user_id = cookies.get("user_id")
