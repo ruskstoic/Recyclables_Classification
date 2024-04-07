@@ -34,6 +34,9 @@ from flask_cors import CORS
 import socket
 from deta import Deta
 import base64
+from google.auth.transport.requests import Request
+from google_auth_oauthlib.flow import InstalledAppFlow
+from googleapiclient.discovery import build
 
 ## Streamlit Tracker Start
 streamlit_analytics.start_tracking()
@@ -181,6 +184,19 @@ def log_user_info(user_name, user_id, formatted_datetime_entered, tab_id, img, g
     log_entry_df = pd.DataFrame([user_info])
     return log_entry_df
 
+## TEST Create Scope and Authenticate Google Drive
+# Define the scopes for Google Drive API
+SCOPES = ['https://www.googleapis.com/auth/drive']
+
+# Function to authenticate with Google Drive API
+def authenticate():
+    creds = os.environ.get('GDRIVE_AUTHENTICATION_CREDENTIALS')
+    return creds
+
+# Authenticate with Google Drive API
+credentials = authenticate()
+service = build('drive', 'v3', credentials=credentials)
+
 ## Streamlit Interface
 st.title('Can We Predict Which Recyclable Category Your Trash is Under?')
 st.subheader("Model Disclaimer: Work in Progress 🚧\n\nOur model is in its early stages and is continuously undergoing training and improvements. \
@@ -272,11 +288,12 @@ if user_name:
                     if img.mode == 'RGBA':
                         img = img.convert('RGB')
                     img = img.resize((224, 224))
-                    img = np.array(img) / 255.0
-                    img = np.expand_dims(img, axis=0)
+                    file_details = {'FileName': uploaded_image.name, 'FileType': uploaded_image.type}
+                    array_img = np.array(img) / 255.0
+                    array_img = np.expand_dims(img, axis=0)
     
                     # Make predictions
-                    predictions = model.predict(img)
+                    predictions = model.predict(array_img)
                     class_names = ['Glass', 'Metal', 'Paper', 'Plastic']
                     confidence = format(np.max(predictions) * 100, ".2f")
                     likely_class = class_names[np.argmax(predictions)]
@@ -290,7 +307,7 @@ if user_name:
         
                     #Create dictionary of all user info
                     log_entry_df_predictions = log_user_info(user_name=user_name, user_id=user_id, formatted_datetime_entered=formatted_datetime_entered, tab_id=tab_id,
-                                 img=img, glass_percent=glass_percent, metal_percent=metal_percent, paper_percent=paper_percent, plastic_percent=plastic_percent)
+                                 img=uploaded_image.name, glass_percent=glass_percent, metal_percent=metal_percent, paper_percent=paper_percent, plastic_percent=plastic_percent)
                     #Create Google Sheet Connection Object
                     conn = st.connection('gsheets', type=GSheetsConnection)
                     # Read existing data from the worksheet
@@ -303,6 +320,16 @@ if user_name:
                     conn.update(worksheet='Sheet1', data=combined_df)
                     # Clear cache and display success message
                     st.cache_data.clear()
+
+                    #TEST Save Image into Google Drive
+                    img_filename = f'{uploaded_image.name}_{likelyclass}{confidence}%_{name}_{user_id[0:8]}.jpg'  # Assuming you want to save as JPEG
+                    file_metadata = {
+                    'name': img_filename,
+                    'parents': ['1fBIYzV6_Q4xt4oPzqYN-2ELSyMU9mYAW']  # Specify the folder ID in which you want to upload the image
+                    }
+                    media = MediaFileUpload(img, mimetype='image/jpeg')  # Adjust mimetype as per your file type
+                    file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+                    st.success(f'Image uploaded successfully! File ID: {file.get("id")}')
                 
                 else:
                     st.write('Failed to download the model file from GitHub.')
