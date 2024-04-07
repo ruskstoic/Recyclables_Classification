@@ -189,11 +189,17 @@ def log_user_info(user_name, user_id, formatted_datetime_entered, tab_id, img, g
 
 ## TEST Create Scope and Authenticate Google Drive
 # Define the scopes for Google Drive API
-SCOPES = ['https://www.googleapis.com/auth/drive']
+SCOPES = ['https://www.googleapis.com/auth/drive',
+         # 'https://www.googleapis.com/auth/drive.appdata',
+         #  'https://www.googleapis.com/auth/drive.appfolder',
+         #  'https://www.googleapis.com/auth/drive.install',
+         #  'https://www.googleapis.com/auth/drive.file'          
+]
 
 # Function to authenticate with Google Drive API
 def authenticate():
-    creds = os.environ.get('GDRIVE_AUTHENTICATION_CREDENTIALS')
+    gdrive_auth_secret = os.environ.get('GDRIVE_AUTHENTICATION_CREDENTIALS')
+    creds = Credentials.from_authorized_user_file(gdrive_auth_secret, SCOPES)
     return creds
 
 # Authenticate with Google Drive API
