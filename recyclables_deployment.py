@@ -329,6 +329,9 @@ if user_name:
                     'name': img_filename,
                     'parents': ['1fBIYzV6_Q4xt4oPzqYN-2ELSyMU9mYAW']  # Specify the folder ID in which you want to upload the image
                     }
+                    # Save the image to a temporary file
+                    with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+                        img.save(temp_file.name)
                     media = MediaFileUpload(img, mimetype='image/jpeg')  # Adjust mimetype as per your file type
                     file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
                     st.success(f'Image uploaded successfully! File ID: {file.get("id")}')
