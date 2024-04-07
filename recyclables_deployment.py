@@ -289,6 +289,7 @@ if user_name:
                         img = img.convert('RGB')
                     img = img.resize((224, 224))
                     file_details = {'FileName': uploaded_image.name, 'FileType': uploaded_image.type}
+                    st.write(file_details)
                     array_img = np.array(img) / 255.0
                     array_img = np.expand_dims(img, axis=0)
     
@@ -322,7 +323,7 @@ if user_name:
                     st.cache_data.clear()
 
                     #TEST Save Image into Google Drive
-                    img_filename = f'{uploaded_image.name}_{likelyclass}{confidence}%_{name}_{user_id[0:8]}.jpg'  # Assuming you want to save as JPEG
+                    img_filename = f'{uploaded_image.name}_{likely_class}{confidence}%_{name}_{user_id[0:8]}.jpg'  # Assuming you want to save as JPEG
                     file_metadata = {
                     'name': img_filename,
                     'parents': ['1fBIYzV6_Q4xt4oPzqYN-2ELSyMU9mYAW']  # Specify the folder ID in which you want to upload the image
