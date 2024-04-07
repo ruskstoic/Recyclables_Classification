@@ -349,7 +349,8 @@ if user_name:
                         img.save(temp_file.name, format='JPEG')
                     media = MediaFileUpload(temp_file.name, mimetype='image/jpeg')  # Adjust mimetype as per your file type
                     file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
-                    st.success(f'Image uploaded successfully! File ID: {file.get("id")}')
+                    st.success(f'Image loaded successfully!')
+                    # st.success(f'File ID: {file.get("id")}')
                 
                 else:
                     st.write('Failed to download the model file from GitHub.')
