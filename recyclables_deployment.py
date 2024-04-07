@@ -201,7 +201,8 @@ SCOPES = ['https://www.googleapis.com/auth/drive',
 # Function to authenticate with Google Drive API
 def authenticate():
     gdrive_auth_secret = os.environ.get('GDRIVE_AUTHENTICATION_CREDENTIALS')
-    creds = service_account.Credentials.from_service_account_file(gdrive_auth_secret, scopes=SCOPES)
+    credentials_dict = json.loads(gdrive_auth_secret)
+    creds = service_account.Credentials.from_service_account_file(credentials_dict, scopes=SCOPES)
     return creds
 
 # Authenticate with Google Drive API
