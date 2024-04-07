@@ -205,8 +205,8 @@ SCOPES = ['https://www.googleapis.com/auth/drive',
 gdrive_auth_secret = st.secrets['GDRIVE_AUTHENTICATION_CREDENTIALS']
 st.write('gdrive_auth_secret', gdrive_auth_secret)
 
-credentials_dict = gdrive_auth_secret.as_dict()
-st.write(credentials_dict)
+gdrive_auth_secret_dict = toml.loads(gdrive_auth_secret)
+st.write(gdrive_auth_secret_dict)
 
 gdrive_auth_secret_json = json.dumps(credentials_dict)
 st.write(gdrive_auth_secret_json)
