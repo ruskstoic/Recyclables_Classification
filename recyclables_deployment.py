@@ -40,6 +40,7 @@ from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 import tempfile
 from google.auth.credentials import Credentials
+from google.oauth2 import service_account
 
 
 ## Streamlit Tracker Start
@@ -200,7 +201,7 @@ SCOPES = ['https://www.googleapis.com/auth/drive',
 # Function to authenticate with Google Drive API
 def authenticate():
     gdrive_auth_secret = os.environ.get('GDRIVE_AUTHENTICATION_CREDENTIALS')
-    creds = Credentials.from_authorized_user_file(gdrive_auth_secret, SCOPES)
+    creds = service_account.Credentials.from_service_account_file(gdrive_auth_secret, scopes=SCOPES)
     return creds
 
 # Authenticate with Google Drive API
