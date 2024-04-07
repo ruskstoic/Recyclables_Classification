@@ -210,8 +210,8 @@ def authenticate():
     return creds
 
 # Authenticate with Google Drive API
-# credentials = authenticate()
-# service = build('drive', 'v3', credentials=credentials)
+credentials = authenticate()
+service = build('drive', 'v3', credentials=credentials)
 
 ## Streamlit Interface
 st.title('Can We Predict Which Recyclable Category Your Trash is Under?')
