@@ -206,7 +206,7 @@ def authenticate():
     # st.write('gdrive_auth_secret', gdrive_auth_secret)
     # st.write("client_email", gdrive_auth_secret["client_email"])
     # st.write("private_key", gdrive_auth_secret["private_key"])
-    creds = service_account.Credentials.from_service_account_file(gdrive_auth_secret, scopes=SCOPES)
+    creds = service_account.Credentials.from_service_account_info(gdrive_auth_secret, scopes=SCOPES)
     return creds
 
 # Authenticate with Google Drive API
