@@ -17,6 +17,4 @@ google-auth
 google-auth-oauthlib
 google-auth-httplib2
 google-api-python-client
-google.auth.transport.requests
-google_auth_oauthlib.flow
-googleapiclient.discovery
+
