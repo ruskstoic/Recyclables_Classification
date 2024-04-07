@@ -13,3 +13,6 @@ streamlit-cookies-manager
 flask
 flask-cors
 deta
+google.auth.transport.requests
+google_auth_oauthlib.flow
+googleapiclient.discovery
