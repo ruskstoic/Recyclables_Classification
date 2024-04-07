@@ -56,7 +56,7 @@ cookies = EncryptedCookieManager(
 )
 if not cookies.ready(): # Wait for the component to load and send us current cookies.
     st.stop()
-st.write('cookies manager', os.environ.get("STREAMLIT_COOKIES_MANAGER_PASSWORD"))
+st.write('cookies manager', os.environ["STREAMLIT_COOKIES_MANAGER_PASSWORD"])
 
 # Retrieve the user_id from the cookies
 cookies_user_id = cookies.get("user_id")
@@ -202,7 +202,8 @@ SCOPES = ['https://www.googleapis.com/auth/drive',
 
 # Function to authenticate with Google Drive API
 # def authenticate():
-gdrive_auth_secret = os.environ.get('GDRIVE_AUTHENTICATION_CREDENTIALS')
+# gdrive_auth_secret = os.environ.get('GDRIVE_AUTHENTICATION_CREDENTIALS')
+gdrive_auth_secret = os.environ['GDRIVE_AUTHENTICATION_CREDENTIALS']
 st.write('gdrive_auth_secret', gdrive_auth_secret)
 # credentials_dict = json.loads(gdrive_auth_secret)
 # st.write(credentials_dict)
