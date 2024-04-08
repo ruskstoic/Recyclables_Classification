@@ -224,9 +224,10 @@ for file in files:
     # Assuming the file is a TensorFlow model file, store its contents
     model_folder_contents[file['name']] = fh.getvalue()
 
+
 # Print the contents of the model folder
 for filename, content in model_folder_contents.items():
-    print(f"File: {filename}, Size: {len(content)} bytes")
+    st.write(f"File: {filename}, Size: {len(content)} bytes")
 
 # Assuming the TensorFlow model file is named "model.h5"
 # model_bytes = model_folder_contents['ResNet50_1.1.tf']
