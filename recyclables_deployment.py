@@ -207,13 +207,13 @@ service = build('drive', 'v3', credentials=credentials)
 resnet50_1o1_folder_id = '10ltZpau6AopLB9iYPvjK0Qesjs7HTWXl'
 
 # List all files in the folder
-results = drive_service.files().list(q=f"'{folder_id}' in parents and trashed=false",
+results = drive.files().list(q=f"'{folder_id}' in parents and trashed=false",
                                      fields='files(id, name)').execute()
 files = results.get('files', [])
 
 # Download the model folder as a zip file
 for file in files:
-    request = drive_service.files().get_media(fileId=file['id'])
+    request = drive.files().get_media(fileId=file['id'])
     fh = io.BytesIO()
     downloader = MediaIoBaseDownload(fh, request)
     done = False
