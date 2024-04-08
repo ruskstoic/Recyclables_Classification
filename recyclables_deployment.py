@@ -226,6 +226,7 @@ for file in files:
 
 
 # Print the contents of the model folder
+st.write(model_folder_contents, 'model_folder_contents')
 for filename, content in model_folder_contents.items():
     st.write(f"File: {filename}, Size: {len(content)} bytes")
 
