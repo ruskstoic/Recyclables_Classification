@@ -204,7 +204,7 @@ service = build('drive', 'v3', credentials=credentials)
 # st.success('Finetuned Model loaded successfully!')
 
 # Define the file ID of your TensorFlow model folder
-resnet50_1o1_folder_id = '14uMRihEIRurXoQ72c9qv4qBlLZDqW5Ap'
+resnet50_1o1_folder_id = '10ltZpau6AopLB9iYPvjK0Qesjs7HTWXl'
 
 # List all files in the folder
 results = service.files().list(q=f"'{resnet50_1o1_folder_id}' in parents and trashed=false",
