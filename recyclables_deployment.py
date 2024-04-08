@@ -225,7 +225,7 @@ for file in files:
     with zipfile.ZipFile(fh) as zip_file:
         # Extract the contents of the zip file into memory
         model_folder_contents.update({name: zip_file.read(name) for name in zip_file.namelist()})
-st.write(model_folder_contents)
+st.write('model_folder_contents', model_folder_contents)
 for key in model_folder_contents.keys():
     st.write(key)
 
