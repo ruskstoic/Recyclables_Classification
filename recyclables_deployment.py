@@ -222,7 +222,7 @@ with open(temp_file_path, "wb") as f:
     f.write(fh.read())
 
 # Load the model from the downloaded file
-loaded_model = tf.keras.models.load_model(fh)
+loaded_model = tf.keras.models.load_model(temp_file_path)
 st.write(loaded_model, 'loaded_model')
 
 ######
