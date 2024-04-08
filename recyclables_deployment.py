@@ -41,6 +41,7 @@ from googleapiclient.http import MediaFileUpload
 import tempfile
 from google.auth.credentials import Credentials
 from google.oauth2 import service_account
+import io
 
 ## Streamlit Tracker Start
 streamlit_analytics.start_tracking()
