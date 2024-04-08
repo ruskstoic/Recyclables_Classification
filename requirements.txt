@@ -7,7 +7,7 @@ requests
 uuid
 datetime
 pytz
-st-gsheets-connection
+st-gsheets-connection>=0.0.4
 streamlit-analytics
 streamlit-cookies-manager
 flask
