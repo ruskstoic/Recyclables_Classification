@@ -206,7 +206,7 @@ service = build('drive', 'v3', credentials=credentials)
 # st.success('Finetuned Model loaded successfully!')
 
 # Define the file ID of your TensorFlow model folder
-resnet50_1o1_id = '0Hk4WqdxvJh45a1obiQQ_14JC'
+resnet50_1o1_id = '1CgUsxJ'
 
 # Download the model file
 request = service.files().get_media(fileId=resnet50_1o1_id)
