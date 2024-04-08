@@ -286,7 +286,7 @@ if user_name:
                         f.write(fh.read())
                     # Load the model from the downloaded file
                     resnet50_1o1_model = tf.keras.models.load_model(temp_file_path)
-                    st.success('Model2 file downloaded successfully! Now downloading Model2...')
+                    st.success('Model2 file downloaded successfully! Now downloading Model3...')
 
                     # Download finetuned model file
                     request = service.files().get_media(fileId=finetuned_1o1_id)
@@ -300,7 +300,7 @@ if user_name:
                         f.write(fh.read())
                     # Load the model from the downloaded file
                     resnet50_1o1_finetuned_model = tf.keras.models.load_model(temp_file_path_finetuned)
-                    st.success('Model3 file downloaded successfully! Predictions are being made now please wait awhile more...')
+                    st.success('Model3 file downloaded successfully! Now making predictions...')
     
                     # Preprocess the uploaded image
                     img = Image.open(uploaded_image)
