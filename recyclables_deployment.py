@@ -208,43 +208,25 @@ resnet50_1o1_folder_id = '14uMRihEIRurXoQ72c9qv4qBlLZDqW5Ap'
 
 # List all files in the folder
 results = service.files().list(q=f"'{resnet50_1o1_folder_id}' in parents and trashed=false",
-                                     fields='files(id, name)').execute()
+                               fields='files(id, name)').execute()
 files = results.get('files', [])
 model_folder_contents = {}
 
-file_list = service.ListFile({'q': f"'{resnet50_1o1_folder_id}' in parents and trashed=false"}).GetList()
-
-# Search for the zip file containing the model
-model_zip_file = None
-for file in file_list:
-    if file['title'].endswith('.zip'):
-        model_zip_file = file
-        break
-
-# If a zip file containing the model is found, download it
-if model_zip_file:
-    model_zip_file.GetContentFile('model.zip')
-    print('Model zip file downloaded successfully!')
-else:
-    print('No zip file containing the model found in the folder.')
-
-# Download the model folder as a zip file
+# Download the model files
 for file in files:
     request = service.files().get_media(fileId=file['id'])
-    st.write('request', request)
     fh = io.BytesIO()
     downloader = MediaIoBaseDownload(fh, request)
     done = False
     while done is False:
         status, done = downloader.next_chunk()
 
-    # Assuming the file is a zip file containing the TensorFlow model
-    with zipfile.ZipFile(fh) as zip_file:
-        # Extract the contents of the zip file into memory
-        model_folder_contents.update({name: zip_file.read(name) for name in zip_file.namelist()})
-st.write('model_folder_contents', model_folder_contents)
-for key in model_folder_contents.keys():
-    st.write(key)
+    # Assuming the file is a TensorFlow model file, store its contents
+    model_folder_contents[file['name']] = fh.getvalue()
+
+# Print the contents of the model folder
+for filename, content in model_folder_contents.items():
+    print(f"File: {filename}, Size: {len(content)} bytes")
 
 # Assuming the TensorFlow model file is named "model.h5"
 # model_bytes = model_folder_contents['ResNet50_1.1.tf']
