@@ -216,6 +216,11 @@ downloader = request.execute()
 fh.write(downloader)
 fh.seek(0)
 
+# Save the model to a temporary file
+temp_file_path = "/tmp/model.h5"
+with open(temp_file_path, "wb") as f:
+    f.write(fh.read())
+
 # Load the model from the downloaded file
 loaded_model = tf.keras.models.load_model(fh)
 st.write(loaded_model, 'loaded_model')
