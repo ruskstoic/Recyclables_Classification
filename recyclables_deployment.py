@@ -210,6 +210,7 @@ resnet50_1o1_folder_id = '10ltZpau6AopLB9iYPvjK0Qesjs7HTWXl'
 results = service.files().list(q=f"'{resnet50_1o1_folder_id}' in parents and trashed=false",
                                      fields='files(id, name)').execute()
 files = results.get('files', [])
+model_folder_contents = {}
 
 # Download the model folder as a zip file
 for file in files:
@@ -223,7 +224,7 @@ for file in files:
     # Assuming the file is a zip file containing the TensorFlow model
     with zipfile.ZipFile(fh) as zip_file:
         # Extract the contents of the zip file into memory
-        model_folder_contents = {name: zip_file.read(name) for name in zip_file.namelist()}
+        model_folder_contents.update({name: zip_file.read(name) for name in zip_file.namelist()})
 
 # Assuming the TensorFlow model file is named "model.h5"
 model_bytes = model_folder_contents['ResNet50_1.1.tf']
