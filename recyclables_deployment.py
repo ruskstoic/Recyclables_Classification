@@ -212,6 +212,22 @@ results = service.files().list(q=f"'{resnet50_1o1_folder_id}' in parents and tra
 files = results.get('files', [])
 model_folder_contents = {}
 
+file_list = drive.ListFile({'q': f"'{folder_id}' in parents and trashed=false"}).GetList()
+
+# Search for the zip file containing the model
+model_zip_file = None
+for file in file_list:
+    if file['title'].endswith('.zip'):
+        model_zip_file = file
+        break
+
+# If a zip file containing the model is found, download it
+if model_zip_file:
+    model_zip_file.GetContentFile('model.zip')
+    print('Model zip file downloaded successfully!')
+else:
+    print('No zip file containing the model found in the folder.')
+
 # Download the model folder as a zip file
 for file in files:
     request = service.files().get_media(fileId=file['id'])
