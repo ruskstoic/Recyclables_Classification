@@ -198,35 +198,6 @@ def authenticate():
 credentials = authenticate()
 service = build('drive', 'v3', credentials=credentials)
 
-##TEST###
-# not_finetuned_model_path = f'/content/gdrive/MyDrive/Garbage Classification/Saved_Models/ResNet50_1.1.tf'
-# resnet50_1o1_model = tf.keras.models.load_model(not_finetuned_model_path, custom_objects={'dtype': 'float32'})
-# finetuned_model_path = f'/content/gdrive/MyDrive/Garbage Classification/Saved_Models/ResNet50_1.1_finetuned.tf'
-# resnet50_1o1_finetuned_model = tf.keras.models.load_model(finetuned_model_path, custom_objects={'dtype': 'float32'})
-# st.success('Finetuned Model loaded successfully!')
-
-# Define the file ID of your TensorFlow model folder
-resnet50_1o1_id = '1CgUsxJ-0Hk4WqdxvJh45a1obiQQ_14JC'
-model_file_path = '/content/gdrive/MyDrive/Garbage Classification/Saved_Models/ResNet50_1.1.h5'
-
-# Download the model file
-request = service.files().get_media(fileId=resnet50_1o1_id)
-fh = io.BytesIO()
-downloader = request.execute()
-fh.write(downloader)
-fh.seek(0)
-
-# Save the model to a temporary file
-temp_file_path = "/tmp/model.h5"
-with open(temp_file_path, "wb") as f:
-    f.write(fh.read())
-
-# Load the model from the downloaded file
-loaded_model = tf.keras.models.load_model(temp_file_path)
-st.write(loaded_model, 'loaded_model')
-
-######
-
 ## Streamlit Interface
 st.title('Can We Predict Which Recyclable Category Your Trash is Under?')
 st.subheader("Model Disclaimer: Work in Progress 🚧\n\nOur model is in its early stages and is continuously undergoing training and improvements. \
@@ -307,11 +278,42 @@ if user_name:
                     # Save the model file locally
                     with open(model_filename, 'wb') as f:
                         f.write(response.content)
-    
-                    # Load the model
+        
+                    # Load the Original Model
                     import tensorflow as tf
                     from tensorflow.keras.preprocessing.image import load_img, img_to_array
                     model = tf.keras.models.load_model(model_filename)
+
+                    ## Loading of Models from Google Drive
+                    # Define the file ID of your TensorFlow model
+                    resnet50_1o1_id = '1CgUsxJ-0Hk4WqdxvJh45a1obiQQ_14JC'
+                    finetuned_1o1_id = '1-38aYBp6oNYJqbsGEnqFi-pAvWtb2jal'
+                    
+                    # Download resnet50 model file
+                    request = service.files().get_media(fileId=resnet50_1o1_id)
+                    fh = io.BytesIO()
+                    downloader = request.execute()
+                    fh.write(downloader)
+                    fh.seek(0)
+                    # Save resnet50 model to a temporary file
+                    temp_file_path = "/tmp/resnet50_1o1_model.h5"
+                    with open(temp_file_path, "wb") as f:
+                        f.write(fh.read())
+                    # Load the model from the downloaded file
+                    resnet50_1o1_model = tf.keras.models.load_model(temp_file_path)
+
+                    # Download finetuned model file
+                    request = service.files().get_media(fileId=finetuned_1o1_id)
+                    fh = io.BytesIO()
+                    downloader = request.execute()
+                    fh.write(downloader)
+                    fh.seek(0)
+                    # Save resnet50 model to a temporary file
+                    temp_file_path_finetuned = "/tmp/resnet50_1o1_finetuned_model.h5"
+                    with open(temp_file_path, "wb") as f:
+                        f.write(fh.read())
+                    # Load the model from the downloaded file
+                    resnet50_1o1_finetuned_model = tf.keras.models.load_model(temp_file_path_finetuned)
     
                     # Preprocess the uploaded image
                     img = Image.open(uploaded_image)
