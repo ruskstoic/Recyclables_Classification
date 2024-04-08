@@ -204,35 +204,19 @@ service = build('drive', 'v3', credentials=credentials)
 # st.success('Finetuned Model loaded successfully!')
 
 # Define the file ID of your TensorFlow model folder
-resnet50_1o1_folder_id = '10ltZpau6AopLB9iYPvjK0Qesjs7HTWXl'
+resnet50_1o1_id = '1CgUsxJ-0Hk4WqdxvJh45a1obiQQ_14JC'
 
-# List all files in the folder
-results = service.files().list(q=f"'{resnet50_1o1_folder_id}' in parents and trashed=false",
-                               fields='files(id, name)').execute()
-files = results.get('files', [])
-model_folder_contents = {}
+# Download the model file
+request = service.files().get_media(fileId=resnet50_1o1_id)
+fh = io.BytesIO()
+downloader = MediaIoBaseDownload(fh, request)
+done = False
+while done is False:
+    status, done = downloader.next_chunk()
 
-# Download the model files
-for file in files:
-    request = service.files().get_media(fileId=file['id'])
-    fh = io.BytesIO()
-    downloader = MediaIoBaseDownload(fh, request)
-    done = False
-    while done is False:
-        status, done = downloader.next_chunk()
-
-    # Assuming the file is a TensorFlow model file, store its contents
-    model_folder_contents[file['name']] = fh.getvalue()
-
-
-# Print the contents of the model folder
-st.write(model_folder_contents, 'model_folder_contents')
-for filename, content in model_folder_contents.items():
-    st.write(f"File: {filename}, Size: {len(content)} bytes")
-
-# Assuming the TensorFlow model file is named "model.h5"
-# model_bytes = model_folder_contents['ResNet50_1.1.tf']
-# resnet50_1o1_model = tf.keras.models.load_model(io.BytesIO(model_bytes))
+# Load the model from the downloaded file
+loaded_model = tf.keras.models.load_model(fh)
+st.write(loaded_model, 'loaded_model')
 
 ######
 
