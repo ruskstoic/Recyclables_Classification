@@ -341,9 +341,9 @@ if user_name:
                     likely_class_resnet = class_names[np.argmax(predictions_resnet)]
                     likely_class_finetuned = class_names[np.argmax(predictions_finetuned)]
     
-                    st.write(f'Original Model Prediction: Class-{likely_class}, Confidence-{confidence}%')
-                    st.write(f'Resnet50 Model Prediction: Class-{likely_class_resnet}, Confidence-{confidence_resnet}%')
-                    st.write(f'Finetuned Model Prediction: Class-{likely_class_finetuned}, Confidence-{confidence_finetuned}%')
+                    st.write(f'Model1 Prediction: Class-{likely_class}, Confidence-{confidence}%')
+                    st.write(f'Model2 Prediction: Class-{likely_class_resnet}, Confidence-{confidence_resnet}%')
+                    st.write(f'Model3 Prediction: Class-{likely_class_finetuned}, Confidence-{confidence_finetuned}%')
                     
                     # Save Img and Material Confidence Intervals to Google Sheet
                     glass_percent, metal_percent, paper_percent, plastic_percent = predictions[0][0], predictions[0][1], predictions[0][2], predictions[0][3] 
