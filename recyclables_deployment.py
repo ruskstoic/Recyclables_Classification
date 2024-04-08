@@ -303,17 +303,17 @@ if user_name:
                     resnet50_1o1_model = tf.keras.models.load_model(temp_file_path)
 
                     # Download finetuned model file
-                    request = service.files().get_media(fileId=finetuned_1o1_id)
-                    fh = io.BytesIO()
-                    downloader = request.execute()
-                    fh.write(downloader)
-                    fh.seek(0)
-                    # Save resnet50 model to a temporary file
-                    temp_file_path_finetuned = "/tmp/resnet50_1o1_finetuned_model.h5"
-                    with open(temp_file_path, "wb") as f:
-                        f.write(fh.read())
-                    # Load the model from the downloaded file
-                    resnet50_1o1_finetuned_model = tf.keras.models.load_model(temp_file_path_finetuned)
+                    # request = service.files().get_media(fileId=finetuned_1o1_id)
+                    # fh = io.BytesIO()
+                    # downloader = request.execute()
+                    # fh.write(downloader)
+                    # fh.seek(0)
+                    # # Save resnet50 model to a temporary file
+                    # temp_file_path_finetuned = "/tmp/resnet50_1o1_finetuned_model.h5"
+                    # with open(temp_file_path, "wb") as f:
+                    #     f.write(fh.read())
+                    # # Load the model from the downloaded file
+                    # resnet50_1o1_finetuned_model = tf.keras.models.load_model(temp_file_path_finetuned)
     
                     # Preprocess the uploaded image
                     img = Image.open(uploaded_image)
@@ -328,20 +328,20 @@ if user_name:
                     # Make predictions
                     predictions = model.predict(array_img)
                     predictions_resnet = resnet50_1o1_model.predict(array_img)
-                    predictions_finetuned = resnet50_1o1_finetuned_model.predict(array_img)
+                    # predictions_finetuned = resnet50_1o1_finetuned_model.predict(array_img)
                     class_names = ['Glass', 'Metal', 'Paper', 'Plastic']
                     
                     confidence = format(np.max(predictions) * 100, ".2f")
                     confidence_resnet = format(np.max(predictions_resnet) * 100, ".2f")
-                    confidence_finetuned = format(np.max(predictions_finetuned) * 100, ".2f")
+                    # confidence_finetuned = format(np.max(predictions_finetuned) * 100, ".2f")
                     
                     likely_class = class_names[np.argmax(predictions)]
                     likely_class_resnet = class_names[np.argmax(predictions_resnet)]
-                    likely_class_finetuned = class_names[np.argmax(predictions_finetuned)]
+                    # likely_class_finetuned = class_names[np.argmax(predictions_finetuned)]
     
                     st.write(f'Original Model Prediction: Class-{likely_class}, Confidence-{confidence}%')
                     st.write(f'Resnet50 Model Prediction: Class-{likely_class_resnet}, Confidence-{confidence_resnet}%')
-                    st.write(f'Finetuned Model Prediction: Class-{likely_class_finetuned}, Confidence-{confidence_finetuned}%')
+                    # st.write(f'Finetuned Model Prediction: Class-{likely_class_finetuned}, Confidence-{confidence_finetuned}%')
                     
                     # Save Img and Material Confidence Intervals to Google Sheet
                     glass_percent, metal_percent, paper_percent, plastic_percent = predictions[0][0], predictions[0][1], predictions[0][2], predictions[0][3] 
