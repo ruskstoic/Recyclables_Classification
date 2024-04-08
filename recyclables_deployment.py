@@ -211,11 +211,10 @@ model_file_path = '/content/gdrive/MyDrive/Garbage Classification/Saved_Models/R
 
 # Download the model file
 request = service.files().get_media(fileId=resnet50_1o1_id)
-with open(model_file_path, 'wb') as f:
-    downloader = MediaIoBaseDownload(f, request)
-    done = False
-    while done is False:
-        status, done = downloader.next_chunk()
+fh = io.BytesIO()
+downloader = request.execute()
+fh.write(downloader)
+fh.seek(0)
 
 # Load the model from the downloaded file
 loaded_model = tf.keras.models.load_model(fh)
