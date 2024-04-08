@@ -210,11 +210,11 @@ resnet50_1o1_id = '1CgUsxJ-0Hk4WqdxvJh45a1obiQQ_14JC'
 
 # Download the model file
 request = service.files().get_media(fileId=resnet50_1o1_id)
-fh = io.BytesIO()
-downloader = MediaIoBaseDownload(fh, request)
-done = False
-while done is False:
-    status, done = downloader.next_chunk()
+with open(model_file_path, 'wb') as f:
+    downloader = MediaIoBaseDownload(f, request)
+    done = False
+    while done is False:
+        status, done = downloader.next_chunk()
 
 # Load the model from the downloaded file
 loaded_model = tf.keras.models.load_model(fh)
