@@ -41,9 +41,7 @@ from googleapiclient.http import MediaFileUpload
 import tempfile
 from google.auth.credentials import Credentials
 from google.oauth2 import service_account
-import json
-import toml
-
+from google.colab import drive
 
 ## Streamlit Tracker Start
 streamlit_analytics.start_tracking()
@@ -65,6 +63,15 @@ cookies_user_id = cookies.get("user_id")
 if cookies_user_id is None:
     cookies_user_id = str(uuid.uuid4())
     cookies["user_id"] = cookies_user_id
+
+##TEST##
+drive.mount('/content/drive')
+finetuned_model_path = f'/content/gdrive/MyDrive/Garbage Classification/Saved_Models/ResNet50_1.1_finetuned.tf'
+resnet50_1o1_finetuned_model = tf.keras.models.load_model(finetuned_model_path, custom_objects={'dtype': 'float32'})
+st.success('Finetuned Model loaded successfully!')
+
+# Path to your model folder in Google Drive
+
 
 ## TEST ###############################
 # # TEST IPA
@@ -142,21 +149,6 @@ if cookies_user_id is None:
 #     st.write(f'Java app is running on port {java_port}')
 
 ##################
-
-##TEST DETA Drive
-
-# DETA_key = os.environ.get()
-# deta = Deta(DETA_key)
-# drive = deta.Drive('insert_drive_name')
-# st.set_option('deprecation.showfileUploaderEncoding', False) # Enabling the automatic file decoder
-
-#Put at bottom of code
-# uploaded_img = st.file_uploader("Choose photos to upload", accept_multiple_files=True, type=['png', 'jpeg', 'jpg'])
-# name = f'{confidence}%{likely_class}_{user_info}'
-# path ='./' + name # Creating path string which is basically ["./image.jpg"]
-# drive.put(name, path=path) # so, we have our file name and path, so uploading images to the drive
-# os.remove(name) # Finally deleting it from root folder
-
 
 ## Functions
 # Function to get or create a unique ID for current session
