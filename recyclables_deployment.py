@@ -210,7 +210,8 @@ service = build('drive', 'v3', credentials=credentials)
 ## Streamlit Interface
 st.title('Can We Predict Which Recyclable Category Your Trash is Under?')
 st.subheader("Model Disclaimer: Work in Progress 🚧\n\nOur model is in its early stages and is continuously undergoing training and improvements. \
-Please note that it's a beginner model, and while it shows promising results, it is not perfect. We appreciate your understanding as we strive to enhance its performance over time.")
+Please note that it's a beginner model, and while it shows promising results, it is not perfect. We appreciate your understanding as we strive to enhance its performance over time. \
+\n Currently we are on our 3rd model, and we will use all 3 models to predict for you.")
 user_name = st.text_input('Hi! What is your name?')
 
 ## Prompt user to enter their name
