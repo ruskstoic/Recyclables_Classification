@@ -207,6 +207,7 @@ service = build('drive', 'v3', credentials=credentials)
 
 # Define the file ID of your TensorFlow model folder
 resnet50_1o1_id = '1CgUsxJ-0Hk4WqdxvJh45a1obiQQ_14JC'
+model_file_path = '/content/gdrive/MyDrive/Garbage Classification/Saved_Models/ResNet50_1.1.h5'
 
 # Download the model file
 request = service.files().get_media(fileId=resnet50_1o1_id)
