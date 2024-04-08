@@ -212,7 +212,7 @@ results = service.files().list(q=f"'{resnet50_1o1_folder_id}' in parents and tra
 files = results.get('files', [])
 model_folder_contents = {}
 
-file_list = drive.ListFile({'q': f"'{folder_id}' in parents and trashed=false"}).GetList()
+file_list = service.ListFile({'q': f"'{resnet50_1o1_folder_id}' in parents and trashed=false"}).GetList()
 
 # Search for the zip file containing the model
 model_zip_file = None
