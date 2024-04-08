@@ -1,13 +1,13 @@
 pandas
 tensorflow
-streamlit>=1.22.0,<3
+streamlit
 numpy
 Pillow
 requests
 uuid
 datetime
 pytz
-st-gsheets-connection>=0.0.4
+st-gsheets-connection
 streamlit-analytics
 streamlit-cookies-manager
 flask
@@ -17,4 +17,3 @@ google-auth
 google-auth-oauthlib
 google-auth-httplib2
 google-api-python-client
-google-colab
