@@ -230,8 +230,8 @@ for key in model_folder_contents.keys():
     st.write(key)
 
 # Assuming the TensorFlow model file is named "model.h5"
-model_bytes = model_folder_contents['ResNet50_1.1.tf']
-resnet50_1o1_model = tf.keras.models.load_model(io.BytesIO(model_bytes))
+# model_bytes = model_folder_contents['ResNet50_1.1.tf']
+# resnet50_1o1_model = tf.keras.models.load_model(io.BytesIO(model_bytes))
 
 ######
 
