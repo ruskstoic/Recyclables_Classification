@@ -215,6 +215,7 @@ model_folder_contents = {}
 # Download the model folder as a zip file
 for file in files:
     request = service.files().get_media(fileId=file['id'])
+    st.write(request)
     fh = io.BytesIO()
     downloader = MediaIoBaseDownload(fh, request)
     done = False
