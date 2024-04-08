@@ -157,20 +157,29 @@ def get_or_create_tab_ID():
         # Generate a UUID for the tab ID
         st.session_state.tab_id = str(uuid.uuid4())
     return st.session_state.tab_id
-
+                    
 # Function to log user info
-def log_user_info(user_name, user_id, formatted_datetime_entered, tab_id, img, glass_percent, metal_percent, paper_percent, plastic_percent):
+def log_user_info(user_name, user_id, formatted_datetime_entered, tab_id, img, m3_glass_percent, m3_metal_percent, m3_paper_percent, m3_plastic_percent,
+                 m2_glass_percent, m2_metal_percent, m2_paper_percent, m2_plastic_percent, m1_glass_percent, m1_metal_percent, m1_paper_percent, m1_plastic_percent):
     #Create a dictionary
     user_info = {
         'Name': user_name,
         'User_ID': user_id,
         'Datetime_Entered': formatted_datetime_entered,
         'Tab_ID': tab_id,
-        'Image': img,
-        'Glass %': glass_percent,
-        'Metal %': metal_percent,
-        'Paper %': paper_percent,
-        'Plastic %': plastic_percent
+        'Image Name': img,
+        'M3 Glass %': m3_glass_percent,
+        'M3 Metal %': m3_metal_percent,
+        'M3 Paper %': m3_paper_percent,
+        'M3 Plastic %': m3_plastic_percent,
+        'M2 Glass %': m2_glass_percent,
+        'M2 Metal %': m2_metal_percent,
+        'M2 Paper %': m2_paper_percent,
+        'M2 Plastic %': m2_plastic_percent,
+        'M1 Glass %': m1_glass_percent,
+        'M1 Metal %': m1_metal_percent,
+        'M1 Paper %': m1_paper_percent,
+        'M1 Plastic %': m1_plastic_percent
     }
     #Convert the dictionary to a DataFrame
     log_entry_df = pd.DataFrame([user_info])
@@ -221,30 +230,6 @@ if user_name:
     converted_timezone = pytz.timezone('Asia/Singapore')
     converted_datetime_entered = datetime.now(converted_timezone)
     formatted_datetime_entered = converted_datetime_entered.strftime(datetime_format)
-
-    # Get the previous values of img and material percentages from session state
-    img = st.session_state.get('img', 'NIL')
-    glass_percent = st.session_state.get('glass_percent', 'NIL')
-    metal_percent = st.session_state.get('metal_percent', 'NIL')
-    paper_percent = st.session_state.get('paper_percent', 'NIL')
-    plastic_percent = st.session_state.get('plastic_percent', 'NIL')
-
-    ## Logging user information
-    # user_log_filename = 'user_log.txt'
-    # log_entry_df = log_user_info(user_name=user_name, user_id=user_id, formatted_datetime_entered=formatted_datetime_entered, tab_id=tab_id,
-    #                              img=img, glass_percent=glass_percent, metal_percent=metal_percent, paper_percent=paper_percent, plastic_percent=plastic_percent)
-    # # Create Google Sheet Connection Object
-    # conn = st.connection('gsheets', type=GSheetsConnection)
-    # # Read existing data from the worksheet
-    # existing_data = conn.read(worksheet='Sheet1', usecols=[0,1,2,3,4,5,6,7,8], end='A')
-    # # Convert the existing data to a DataFrame (assuming it's already in tabular format)
-    # existing_df = pd.DataFrame(existing_data, columns=['Name', 'User_ID', 'Datetime_Entered', 'Tab_ID', 'Image', 'Glass %', 'Metal %', 'Paper %', 'Plastic %'])
-    # # Concatenate the existing DataFrame with the new entry DataFrame
-    # combined_df = pd.concat([existing_df, log_entry_df], ignore_index=True)
-    # # Write the combined DataFrame back to the worksheet
-    # conn.update(worksheet='Sheet1', data=combined_df)
-    # # Clear cache and display success message
-    # st.cache_data.clear()
     
     #Merge and display user info
     user_info_headers = f'Name: {user_name} | User ID: {user_id} | Date Entered: {formatted_datetime_entered} | Tab ID: {tab_id}'
@@ -346,26 +331,31 @@ if user_name:
                     st.write(f'Model3 Prediction: Class-{likely_class_finetuned}, Confidence-{confidence_finetuned}%')
                     
                     # Save Img and Material Confidence Intervals to Google Sheet
-                    glass_percent, metal_percent, paper_percent, plastic_percent = predictions[0][0], predictions[0][1], predictions[0][2], predictions[0][3] 
+                    m1_glass_percent, m1_metal_percent, m1_paper_percent, m1_plastic_percent = predictions[0][0], predictions[0][1], predictions[0][2], predictions[0][3]
+                    m2_glass_percent, m2_metal_percent, m2_paper_percent, m2_plastic_percent = predictions_resnet[0][0], predictions_resnet[0][1], predictions_resnet[0][2], predictions_resnet[0][3]
+                    m3_glass_percent, m3_metal_percent, m3_paper_percent, m3_plastic_percent = predictions_finetuned[0][0], predictions_finetuned[0][1], predictions_finetuned[0][2], predictions_finetuned[0][3]
         
                     #Create dictionary of all user info
-                    log_entry_df_predictions = log_user_info(user_name=user_name, user_id=user_id, formatted_datetime_entered=formatted_datetime_entered, tab_id=tab_id,
-                                 img=uploaded_image.name, glass_percent=glass_percent, metal_percent=metal_percent, paper_percent=paper_percent, plastic_percent=plastic_percent)
+                    log_entry_df_predictions = log_user_info(user_name=user_name, user_id=user_id, formatted_datetime_entered=formatted_datetime_entered, tab_id=tab_id,img=uploaded_image.name, 
+                                                             m3_glass_percent=m3_glass_percent, m3_metal_percent=m3_metal_percent, m3_paper_percent=m3_paper_percent, m3_plastic_percent=m3_plastic_percent,
+                                                             m2_glass_percent=m2_glass_percent, m2_metal_percent=m2_metal_percent, m2_paper_percent=m2_paper_percent, m2_plastic_percent=m2_plastic_percent,
+                                                             m1_glass_percent=m1_glass_percent, m1_metal_percent=m1_metal_percent, m1_paper_percent=m1_paper_percent, m1_plastic_percent=m1_plastic_percent)
                     #Create Google Sheet Connection Object
                     conn = st.connection('gsheets', type=GSheetsConnection)
                     # Read existing data from the worksheet
-                    existing_data = conn.read(worksheet='Sheet1', usecols=[0,1,2,3,4,5,6,7,8], end='A')
+                    existing_data = conn.read(worksheet='Sheet1', usecols=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], end='A')
                     # Convert the existing data to a DataFrame (assuming it's already in tabular format)
-                    existing_df = pd.DataFrame(existing_data, columns=['Name', 'User_ID', 'Datetime_Entered', 'Tab_ID', 'Image', 'Glass %', 'Metal %', 'Paper %', 'Plastic %'])
+                    existing_df = pd.DataFrame(existing_data, columns=['Name', 'User_ID', 'Datetime_Entered', 'Tab_ID', 'Image Name', 'M3 Glass %', 'M3 Metal %', 'M3 Paper %', 'M3 Plastic %',
+                                                                      'M2 Glass %', 'M2 Metal %', 'M2 Paper %', 'M2 Plastic %', 'M1 Glass %', 'M1 Metal %', 'M1 Paper %', 'M1 Plastic %'])
                     # Concatenate the existing DataFrame with the new entry DataFrame
                     combined_df = pd.concat([existing_df, log_entry_df_predictions], ignore_index=True)
                     # Write the combined DataFrame back to the worksheet
-                    # conn.update(worksheet='Sheet1', data=combined_df) #####TURNED OFF UPDATING
+                    conn.update(worksheet='Sheet1', data=combined_df) ##### COMMENT OUT TO TURN OFF UPDATING
                     # Clear cache and display success message
                     st.cache_data.clear()
 
                     #TEST Save Image into Google Drive
-                    img_filename = f'{uploaded_image.name}_{likely_class}{confidence}%_{user_name}_{user_id[0:8]}.jpg'  # Assuming you want to save as JPEG
+                    img_filename = f'{uploaded_image.name}_{likely_class_finetuned}{confidence_finetuned}%_{user_name}_{user_id[0:8]}.jpg'  # Assuming you want to save as JPEG
                     file_metadata = {
                     'name': img_filename,
                     'parents': ['1fBIYzV6_Q4xt4oPzqYN-2ELSyMU9mYAW']  # Specify the folder ID in which you want to upload the image
@@ -374,7 +364,7 @@ if user_name:
                     with tempfile.NamedTemporaryFile(delete=False) as temp_file:
                         img.save(temp_file.name, format='JPEG')
                     media = MediaFileUpload(temp_file.name, mimetype='image/jpeg')  # Adjust mimetype as per your file type
-                    # file = service.files().create(body=file_metadata, media_body=media, fields='id').execute() #####TURNED OFF UPLOADING
+                    file = service.files().create(body=file_metadata, media_body=media, fields='id').execute() ##### COMMENT OUT TO TURN OFF UPLOADING
                     st.success(f'Image loaded successfully!')
                     # st.success(f'File ID: {file.get("id")}')
                 
