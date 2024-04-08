@@ -8,7 +8,6 @@ uuid
 datetime
 pytz
 st-gsheets-connection
-pandas
 streamlit-analytics
 streamlit-cookies-manager
 flask
