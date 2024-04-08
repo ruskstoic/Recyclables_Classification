@@ -12,8 +12,8 @@ import sys
 print(sys.version)
 import subprocess
 import streamlit as st
-# import tensorflow as tf
-# from tensorflow.keras.preprocessing.image import load_img, img_to_array
+import tensorflow as tf
+from tensorflow.keras.preprocessing.image import load_img, img_to_array
 import numpy as np
 from PIL import Image
 import requests
@@ -41,7 +41,6 @@ from googleapiclient.http import MediaFileUpload
 import tempfile
 from google.auth.credentials import Credentials
 from google.oauth2 import service_account
-from google.colab import drive
 
 ## Streamlit Tracker Start
 streamlit_analytics.start_tracking()
@@ -63,14 +62,6 @@ cookies_user_id = cookies.get("user_id")
 if cookies_user_id is None:
     cookies_user_id = str(uuid.uuid4())
     cookies["user_id"] = cookies_user_id
-
-##TEST##
-drive.mount('/content/drive')
-finetuned_model_path = f'/content/gdrive/MyDrive/Garbage Classification/Saved_Models/ResNet50_1.1_finetuned.tf'
-resnet50_1o1_finetuned_model = tf.keras.models.load_model(finetuned_model_path, custom_objects={'dtype': 'float32'})
-st.success('Finetuned Model loaded successfully!')
-
-# Path to your model folder in Google Drive
 
 
 ## TEST ###############################
@@ -205,6 +196,41 @@ def authenticate():
 credentials = authenticate()
 service = build('drive', 'v3', credentials=credentials)
 
+##TEST###
+# not_finetuned_model_path = f'/content/gdrive/MyDrive/Garbage Classification/Saved_Models/ResNet50_1.1.tf'
+# resnet50_1o1_model = tf.keras.models.load_model(not_finetuned_model_path, custom_objects={'dtype': 'float32'})
+# finetuned_model_path = f'/content/gdrive/MyDrive/Garbage Classification/Saved_Models/ResNet50_1.1_finetuned.tf'
+# resnet50_1o1_finetuned_model = tf.keras.models.load_model(finetuned_model_path, custom_objects={'dtype': 'float32'})
+# st.success('Finetuned Model loaded successfully!')
+
+# Define the file ID of your TensorFlow model folder
+resnet50_1o1_folder_id = '10ltZpau6AopLB9iYPvjK0Qesjs7HTWXl'
+
+# List all files in the folder
+results = drive_service.files().list(q=f"'{folder_id}' in parents and trashed=false",
+                                     fields='files(id, name)').execute()
+files = results.get('files', [])
+
+# Download the model folder as a zip file
+for file in files:
+    request = drive_service.files().get_media(fileId=file['id'])
+    fh = io.BytesIO()
+    downloader = MediaIoBaseDownload(fh, request)
+    done = False
+    while done is False:
+        status, done = downloader.next_chunk()
+
+    # Assuming the file is a zip file containing the TensorFlow model
+    with zipfile.ZipFile(fh) as zip_file:
+        # Extract the contents of the zip file into memory
+        model_folder_contents = {name: zip_file.read(name) for name in zip_file.namelist()}
+
+# Assuming the TensorFlow model file is named "model.h5"
+model_bytes = model_folder_contents['ResNet50_1.1.tf']
+resnet50_1o1_model = tf.keras.models.load_model(io.BytesIO(model_bytes))
+
+######
+
 ## Streamlit Interface
 st.title('Can We Predict Which Recyclable Category Your Trash is Under?')
 st.subheader("Model Disclaimer: Work in Progress 🚧\n\nOur model is in its early stages and is continuously undergoing training and improvements. \
@@ -303,13 +329,21 @@ if user_name:
     
                     # Make predictions
                     predictions = model.predict(array_img)
+                    predictions_resnet = resnet50_1o1_model.predict(array_img)
+                    predictions_finetuned = resnet50_1o1_finetuned_model.predict(array_img)
                     class_names = ['Glass', 'Metal', 'Paper', 'Plastic']
+                    
                     confidence = format(np.max(predictions) * 100, ".2f")
+                    confidence_resnet = format(np.max(predictions_resnet) * 100, ".2f")
+                    confidence_finetuned = format(np.max(predictions_finetuned) * 100, ".2f")
+                    
                     likely_class = class_names[np.argmax(predictions)]
+                    likely_class_resnet = class_names[np.argmax(predictions_resnet)]
+                    likely_class_finetuned = class_names[np.argmax(predictions_finetuned)]
     
-                    st.write('Prediction:')
-                    st.write(f'Class: {likely_class}')
-                    st.write(f'Confidence: {confidence}%')
+                    st.write(f'Original Model Prediction: Class-{likely_class}, Confidence-{confidence}%')
+                    st.write(f'Resnet50 Model Prediction: Class-{likely_class_resnet}, Confidence-{confidence_resnet}%')
+                    st.write(f'Finetuned Model Prediction: Class-{likely_class_finetuned}, Confidence-{confidence_finetuned}%')
                     
                     # Save Img and Material Confidence Intervals to Google Sheet
                     glass_percent, metal_percent, paper_percent, plastic_percent = predictions[0][0], predictions[0][1], predictions[0][2], predictions[0][3] 
@@ -326,7 +360,7 @@ if user_name:
                     # Concatenate the existing DataFrame with the new entry DataFrame
                     combined_df = pd.concat([existing_df, log_entry_df_predictions], ignore_index=True)
                     # Write the combined DataFrame back to the worksheet
-                    conn.update(worksheet='Sheet1', data=combined_df)
+                    # conn.update(worksheet='Sheet1', data=combined_df) #####TURNED OFF UPDATING
                     # Clear cache and display success message
                     st.cache_data.clear()
 
@@ -340,7 +374,7 @@ if user_name:
                     with tempfile.NamedTemporaryFile(delete=False) as temp_file:
                         img.save(temp_file.name, format='JPEG')
                     media = MediaFileUpload(temp_file.name, mimetype='image/jpeg')  # Adjust mimetype as per your file type
-                    file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+                    # file = service.files().create(body=file_metadata, media_body=media, fields='id').execute() #####TURNED OFF UPLOADING
                     st.success(f'Image loaded successfully!')
                     # st.success(f'File ID: {file.get("id")}')
                 
