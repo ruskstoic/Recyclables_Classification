@@ -254,7 +254,7 @@ if user_name:
                     response.raise_for_status()  # Check for HTTP errors
                     with open('downloaded_model.h5', 'wb') as model_file:
                         model_file.write(response.content)
-                    st.success('Model1 file downloaded successfully!')
+                    st.success('Model1 file downloaded successfully! Now downloading Model2...')
                 except requests.exceptions.RequestException as e:
                     st.error(f'Failed to download the model file: {str(e)}')
                 
@@ -286,7 +286,7 @@ if user_name:
                         f.write(fh.read())
                     # Load the model from the downloaded file
                     resnet50_1o1_model = tf.keras.models.load_model(temp_file_path)
-                    st.success('Model2 file downloaded successfully!')
+                    st.success('Model2 file downloaded successfully! Now downloading Model2...')
 
                     # Download finetuned model file
                     request = service.files().get_media(fileId=finetuned_1o1_id)
@@ -300,7 +300,7 @@ if user_name:
                         f.write(fh.read())
                     # Load the model from the downloaded file
                     resnet50_1o1_finetuned_model = tf.keras.models.load_model(temp_file_path_finetuned)
-                    st.success('Model3 file downloaded successfully!')
+                    st.success('Model3 file downloaded successfully! Predictions are being made now please wait awhile more...')
     
                     # Preprocess the uploaded image
                     img = Image.open(uploaded_image)
@@ -365,7 +365,7 @@ if user_name:
                         img.save(temp_file.name, format='JPEG')
                     media = MediaFileUpload(temp_file.name, mimetype='image/jpeg')  # Adjust mimetype as per your file type
                     file = service.files().create(body=file_metadata, media_body=media, fields='id').execute() ##### COMMENT OUT TO TURN OFF UPLOADING
-                    st.success(f'Image loaded successfully!')
+                    st.success(f'Image loaded and predictions made successfully!')
                     # st.success(f'File ID: {file.get("id")}')
                 
                 else:
