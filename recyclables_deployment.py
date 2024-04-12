@@ -57,8 +57,6 @@ cookies = EncryptedCookieManager(
 if not cookies.ready(): # Wait for the component to load and send us current cookies.
     st.stop()
 
-st.write(cookies)
-
 # Retrieve the user_id from the cookies
 cookies_user_id = cookies.get("user_id")
     
