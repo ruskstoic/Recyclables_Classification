@@ -44,6 +44,8 @@ from google.auth.credentials import Credentials
 from google.oauth2 import service_account
 import io
 
+st.write(tf.__version__)
+
 ## Streamlit Tracker Start
 streamlit_analytics.start_tracking()
 
